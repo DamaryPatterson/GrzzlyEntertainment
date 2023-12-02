@@ -9,6 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import factories.SessionFactoryBuilder;
 import models.com.Customer;
 import models.com.Employee;
 import models.com.Equipment;
@@ -17,7 +25,7 @@ import models.com.Event;
 import models.com.EventSchedule;
 import models.com.CustomerMessage;
 import models.com.RentalRequest;
-import models.com.Transaction;
+import models.com.Transaction1;
 
 public class ClientHandler implements Runnable {
 	private Socket clientSocket;
@@ -218,14 +226,14 @@ public class ClientHandler implements Runnable {
 							
 						case "AddTransaction":
 							// Handling code for adding a transaction to the database
-							Transaction transaction = (Transaction) objIs.readObject();
+							Transaction1 transaction = (Transaction1) objIs.readObject();
 							addTransactionToDatabase(transaction);
 							objOs.writeObject(true);
 							break;
 						case "FindTransaction":
 							// Handling code for finding a transaction in the database
 							String transactionId = (String) objIs.readObject();
-							Transaction foundTransaction = findTransactionById(transactionId);
+							Transaction1 foundTransaction = findTransactionById(transactionId);
 							objOs.writeObject(foundTransaction);
 							break;
 						case "Update Transaction":
@@ -376,8 +384,8 @@ public class ClientHandler implements Runnable {
 	    }
 	}
 
-	private Transaction findTransactionById(String transactionId) {
-	    Transaction transaction = new Transaction();
+	private Transaction1 findTransactionById(String transactionId) {
+	    Transaction1 transaction = new Transaction1();
 	    try {
 	        String sql = "SELECT * FROM transaction WHERE transactionID = '" + transactionId + "';";
 	        Statement stmt = dbConn.createStatement();
@@ -649,7 +657,7 @@ public class ClientHandler implements Runnable {
 		}
 	}
 
-	private void addTransactionToDatabase(Transaction transaction) {
+	private void addTransactionToDatabase(Transaction1 transaction) {
 	    String sql = "INSERT INTO Transaction(transactionID, transactionDate, amountPaid)" +
 	            " VALUES('" + transaction.getTransactionID() + "','" + transaction.getTransactionDate() +
 	            "','" + transaction.getAmountPaid() + "');";
@@ -746,5 +754,60 @@ public class ClientHandler implements Runnable {
 	    } catch (SQLException | IOException e) {
 	        e.printStackTrace();
 	    }
+	}
+	
+	public void addEvent() {
+		Session session=null;
+		try {
+			session= SessionFactoryBuilder
+					.getSessionFactory()
+					.getCurrentSession();
+			Transaction transaction = session.beginTransaction();
+			session.save(this);
+			transaction.commit();
+			//session.clear();
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+		    if (session != null && session.isOpen()) {
+		        session.close(); // Close the session only if it's open
+		    }
+		}
+	}
+	public void update() {
+		Event event = new Event();
+		Session session= SessionFactoryBuilder
+				.getSessionFactory()
+				.getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		event= session.get(Event.class,((Event) event).getEventID());
+		event.setEventName(event.getEventName());
+		transaction.commit();
+		session.close();
+	}
+	@SuppressWarnings("unchecked")
+	public List<Event> readAll(){
+		List<Event> studentList = new ArrayList<>();
+		Session session= SessionFactoryBuilder
+				.getSessionFactory()
+				.getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		studentList =(List<Event>) session.createQuery("FROM event").getResultList();
+		transaction.commit();
+		session.close();
+		return studentList;
+	}
+	
+	public void deleteEvent() {
+		Event event = new Event();
+		Session session= SessionFactoryBuilder
+				.getSessionFactory()
+				.getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		event= session.get(Event.class,((Event) event).getEventID());
+		event.setEventName(event.getEventName());
+		transaction.commit();
+		session.clear();
 	}
 }

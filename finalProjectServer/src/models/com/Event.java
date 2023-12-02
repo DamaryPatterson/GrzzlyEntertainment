@@ -20,7 +20,7 @@ import org.hibernate.Transaction;
 
 import factories.SessionFactoryBuilder;
 
-@Entity(name = "event")
+@Entity(name = "rentalent")
 @Table(name = "event")
 public class Event implements Serializable {
 	/**
@@ -98,7 +98,7 @@ public class Event implements Serializable {
 		return "Event [eventID=" + eventID + ", eventName=" + eventName + ", date=" + date + "]";
 	}
 
-	public void addEventToFile() {
+	public void addEvent() {
 		Session session=null;
 		try {
 			session= SessionFactoryBuilder
