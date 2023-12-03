@@ -135,7 +135,8 @@ public class ClientHandler implements Runnable {
 						case "Add Event":
 							// Handling code for adding an event to the database
 							Event event = (Event) objIs.readObject();
-							addEventToDatabase(event);
+							//addEventToDatabase(event);
+							event.addEvent();
 							objOs.writeObject(true);
 							break;
 						case "Find Event":
@@ -733,6 +734,7 @@ public class ClientHandler implements Runnable {
 	    }
 	}
 
+	@SuppressWarnings("unused")
 	private void addEventToDatabase(Event event) {
 	    String sql = "INSERT INTO Event(eventID, eventName, date)" +
 	            " VALUES('" + event.getEventID() + "','" + event.getEventName() +
@@ -798,15 +800,15 @@ public class ClientHandler implements Runnable {
 	}
 	@SuppressWarnings("unchecked")
 	public List<Event> readAll(){
-		List<Event> studentList = new ArrayList<>();
+		List<Event> eventList = new ArrayList<>();
 		Session session= SessionFactoryBuilder
 				.getSessionFactory()
 				.getCurrentSession();
 		Transaction transaction = session.beginTransaction();
-		studentList =(List<Event>) session.createQuery("FROM event").getResultList();
+		eventList =(List<Event>) session.createQuery("FROM event").getResultList();
 		transaction.commit();
 		session.close();
-		return studentList;
+		return eventList;
 	}
 	
 	public void deleteEvent() {

@@ -282,7 +282,13 @@ public class Client {
 		}
 	}
 	
-	
+	public void sendEvent(Event eventObj) {
+		try {
+			objOs.writeObject(eventObj);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void sendEmployee(Equipment employeeObj) {
 		try {
