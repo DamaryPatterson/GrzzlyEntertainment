@@ -8,9 +8,6 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-
-
-
 public class AppServer {
 
 	private static final int PORT = 8888;

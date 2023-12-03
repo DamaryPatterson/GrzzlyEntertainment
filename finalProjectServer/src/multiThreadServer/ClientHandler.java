@@ -111,6 +111,7 @@ public class ClientHandler implements Runnable {
 							break;
 							
 							
+							
 						case "Add Inventory":
 							// Handling code for adding equipment stock to the database
 							Inventory equipmentStock = (Inventory) objIs.readObject();
