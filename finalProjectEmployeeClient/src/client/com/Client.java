@@ -18,17 +18,10 @@ public class Client {
 	private ObjectOutputStream objOs;
 	private ObjectInputStream objIs;
 	private String action = "";
-	private boolean isLogin;
 	
 	//need to log client side the minute you see this
 	
 	
-	public boolean isLoginStatus() {
-		return isLogin;
-	}
-	public void setLoginStatus(boolean loginStatus) {
-		this.isLogin = loginStatus;
-	}
 	public Client() {
 		this.createConnection();
 		this.configureStreams();
@@ -50,6 +43,31 @@ public class Client {
 		}
 	}
 	
+	public void closeConnection() {
+		try {
+			objOs.close();
+			objIs.close();
+			connectionSocket.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendCustomer(Customer customerObj) {
+		try {
+			objOs.writeObject(customerObj);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void sendAction(String action) {
+		this.action = action;
+		try {
+			objOs.writeObject(action);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 	public void receiveResponse() {
 		try {
 
@@ -58,6 +76,9 @@ public class Client {
 				if(flag == true) {
 					JOptionPane.showMessageDialog(null, "Account Created Successfully", 
 							"Customer Account Creation Status", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					System.out.println("\nFailed:");
 				}
 			}
 			if(action.equalsIgnoreCase("Find Customer")) {
@@ -134,8 +155,8 @@ public class Client {
 				}
 			}
 			if(action.equalsIgnoreCase("Find Transaction")) {
-				Transaction transaction = new Transaction();
-				transaction =(Transaction)objIs.readObject();
+				Transaction1 transaction = new Transaction1();
+				transaction =(Transaction1)objIs.readObject();
 				if(transaction==null) {
 					JOptionPane.showMessageDialog(null, "No record found","status",JOptionPane.ERROR_MESSAGE);
 				}
@@ -207,11 +228,18 @@ public class Client {
 			
 			if(action.equalsIgnoreCase("Add Event")) {
 				Boolean flag = (Boolean) objIs.readObject();
-				isLogin = flag;
+				if (flag) {
+					JOptionPane.showMessageDialog(null, "Message Sent Successfully", 
+							"Message Status", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 			if(action.equalsIgnoreCase("Find Event")) {
 				Boolean flag = (Boolean) objIs.readObject();
-				isLogin = flag;
+				if (flag) {
+					JOptionPane.showMessageDialog(null, "Message Sent Successfully", 
+							"Message Status", JOptionPane.INFORMATION_MESSAGE);
+				}
+
 			}
 			if(action.equalsIgnoreCase("Update Event")) {
 				
@@ -229,11 +257,18 @@ public class Client {
 			
 			if(action.equalsIgnoreCase("Customer Login")) {
 				Boolean flag = (Boolean) objIs.readObject();
-				isLogin = flag;
+				if (flag) {
+					JOptionPane.showMessageDialog(null, "Message Sent Successfully", 
+							"Message Status", JOptionPane.INFORMATION_MESSAGE);
+				}
+
 			}
 			if(action.equalsIgnoreCase("Employee Login")) {
 				Boolean flag = (Boolean) objIs.readObject();
-				isLogin = flag;
+				if (flag) {
+					JOptionPane.showMessageDialog(null, "Message Sent Successfully", 
+							"Message Status", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		}catch(ClassCastException ex) {
 			ex.printStackTrace();
@@ -247,23 +282,7 @@ public class Client {
 		}
 	}
 	
-	public void closeConnection() {
-		try {
-			objOs.close();
-			objIs.close();
-			connectionSocket.close();
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
 	
-	public void sendCustomer(Customer customerObj) {
-		try {
-			objOs.writeObject(customerObj);
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public void sendEmployee(Equipment employeeObj) {
 		try {
@@ -289,7 +308,7 @@ public class Client {
 		}
 	}
 	
-	public void sendTransaction(Transaction transactionObj) {
+	public void sendTransaction(Transaction1 transactionObj) {
 		try {
 			objOs.writeObject(transactionObj);
 		}catch(IOException e) {
@@ -305,14 +324,7 @@ public class Client {
 		}
 	}
 	
-	public void sendAction(String action) {
-		this.action = action;
-		try {
-			objOs.writeObject(action);
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
+	
 	
 	public void sendCustomerId(String customerId) {
 		try {

@@ -32,7 +32,7 @@ public class EventSchedule implements Serializable {
 	public void setEventID(String eventID) {
 		this.eventID = eventID;
 	}
-	public String getEmployee() {
+	public String getEmployeeID() {
 		return employeeID;
 	}
 	public void setEmployeeID(String id) {

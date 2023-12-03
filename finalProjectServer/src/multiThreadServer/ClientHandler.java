@@ -36,18 +36,14 @@ public class ClientHandler implements Runnable {
 	public ClientHandler(Socket socket) {
 		this.clientSocket = socket;
 		this.dbConn = AppServer.getDatabaseConnection();
-		try {
-			objIs = new ObjectInputStream(clientSocket.getInputStream());
-			objOs = new ObjectOutputStream(clientSocket.getOutputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 	@Override
 	public void run() {
 		try {
-			String action;
+			configureStreams();
+			String action="";
 			while (true) {
 				try {
 					if (clientSocket != null) {
@@ -55,30 +51,30 @@ public class ClientHandler implements Runnable {
 
 						// Handle requests based on the action received from the client
 						switch (action) {
-						case "AddCustomer":
+						case "Add Customer":
 							Customer customer = (Customer) objIs.readObject();
 							addCustomerToDatabase(customer);
 							objOs.writeObject(true);
 							break;
-						case "FindCustomer":
+						case "Find Customer":
 							String customerId = (String) objIs.readObject();
 							Customer foundCustomer = findCustomerById(customerId);
 							objOs.writeObject(foundCustomer);
 							break;
 						case "Update Customer":
 							break;
-						case "DeleteCustomer":
+						case "Delete Customer":
 							String delCustomerId = (String) objIs.readObject();
 							deleteCustomerById(delCustomerId);
 							objOs.writeObject(true);
 							break;
-						case "AddEmployee":
+						case "Add Employee":
 							// Handling code for adding an employee to the database
 							Employee employee = (Employee) objIs.readObject();
 							addEmployeeToDatabase(employee);
 							objOs.writeObject(true);
 							break;
-						case "FindEmployee":
+						case "Find Employee":
 							// Handling code for finding an employee in the database
 							String empId = (String) objIs.readObject();
 							Employee foundEmployee = findEmployeeById(empId);
@@ -86,7 +82,7 @@ public class ClientHandler implements Runnable {
 							break;
 						case "Update Employee":
 							break;
-						case "DeleteEmployee":
+						case "Delete Employee":
 							String delEmpId = (String) objIs.readObject();
 							deleteEmployeeById(delEmpId);
 							objOs.writeObject(true);
@@ -94,13 +90,13 @@ public class ClientHandler implements Runnable {
 							
 							
 							
-						case "AddEquipment":
+						case "Add Equipment":
 							// Handling code for adding equipment to the database
 							Equipment equipment = (Equipment) objIs.readObject();
 							addEquipmentToDatabase(equipment);
 							objOs.writeObject(true);
 							break;
-						case "FindEquipment":
+						case "Find Equipment":
 							// Handling code for finding equipment in the database
 							String equipId = (String) objIs.readObject();
 							Equipment foundEquipment = findEquipmentById(equipId);
@@ -108,7 +104,7 @@ public class ClientHandler implements Runnable {
 							break;
 						case "Update Equipment":
 							break;
-						case "DeleteEquipment":
+						case "Delete Equipment":
 							String delEquipId = (String) objIs.readObject();
 							deleteEquipmentById(delEquipId);
 							objOs.writeObject(true);
@@ -245,6 +241,7 @@ public class ClientHandler implements Runnable {
 							break;
 						
 						default:
+							System.out.println("\nUnrecognized action");
 							break;
 						
 						}
@@ -260,6 +257,15 @@ public class ClientHandler implements Runnable {
 			e.printStackTrace();
 		} finally {
 
+		}
+	}
+	private void configureStreams() {
+		try {
+			objOs = new ObjectOutputStream(clientSocket.getOutputStream());
+			objIs = new ObjectInputStream(clientSocket.getInputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -493,7 +499,7 @@ public class ClientHandler implements Runnable {
 	private Inventory findEquipmentStockById(String equipStockId) {
 	    Inventory stock = null;
 	    try {
-	        String sql = "SELECT * FROM Equipmentstock WHERE equipmentID = '" + equipStockId + "';";
+	        String sql = "SELECT * FROM inventory WHERE equipmentID = '" + equipStockId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 
@@ -554,7 +560,7 @@ public class ClientHandler implements Runnable {
 	private Employee findEmployeeById(String empId) {
 	    Employee employee = new Employee();
 	    try {
-	        String sql = "SELECT * FROM Employee WHERE employeeID = '" + empId + "';";
+	        String sql = "SELECT * FROM employee WHERE employeeID = '" + empId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        
@@ -571,9 +577,10 @@ public class ClientHandler implements Runnable {
 	}
 	private void addEquipmentToDatabase(Equipment equipment) {
 		// TODO Auto-generated method stub
-		String sql = "INSERT into grizzlyequipment.equipment(equipmentID,equipmentName,equipmentCategory"
-				+ "isAvailable,price)" + "VALUES('" + equipment.getEquipmentID() + "','" + equipment.getEquipmentName()
-				+ "','" + equipment.getEquipmentCategory() + "','" + equipment.isAvailabilityStatus() + "');";
+		String sql = "INSERT into rentalent.equipment(equipmentID,equipmentName,equipmentCategory,isAvailable,price)"
+				+ "VALUES('" + equipment.getEquipmentID() + "','" + equipment.getEquipmentName()
+				+ "','" + equipment.getEquipmentCategory() + "','" 
+				+ equipment.isAvailabilityStatus() +"','" + equipment.getPrice()+"');";
 		try {
 			Statement stmt = dbConn.createStatement();
 
@@ -590,7 +597,7 @@ public class ClientHandler implements Runnable {
 
 	private void addEmployeeToDatabase(Employee employee) {
 		// TODO Auto-generated method stub
-		String sql = "INSERT into grizzlyequipment.employee(employeeID,username,password)" + "VALUES('"
+		String sql = "INSERT into rentalent.employee(employeeID,username,password)" + "VALUES('"
 				+ employee.getEmployeeID() + "','" + employee.getUsername() + "','" + employee.getPassword() + "');";
 		try {
 			Statement stmt = dbConn.createStatement();
@@ -608,8 +615,10 @@ public class ClientHandler implements Runnable {
 
 	// Example for adding a Customer record
 	private void addCustomerToDatabase(Customer customer) {
-		String sql = "INSERT INTO dblab.customers(customerID, username,password)" + " VALUES('"
-				+ customer.getCustomerID() + "','" + customer.getUsername() + "','" + customer.getPassword() + "');";
+		String sql = "INSERT INTO rentalent.customer(customerID,username,password,accountBalance)" 
+				+ " VALUES('"+ customer.getCustomerID()+"','"
+				+ customer.getUsername()+ "','"+customer.getPassword()
+				+"','"+customer.getAccountBalance()+"');";
 
 		try {
 			Statement stmt = dbConn.createStatement();
@@ -626,7 +635,7 @@ public class ClientHandler implements Runnable {
 	// Example for finding a Customer record by ID
 	private Customer findCustomerById(String customerId) {
 		Customer customer = null;
-		String sql = "SELECT * FROM dblab.customers WHERE customerID='" + customerId + "';";
+		String sql = "SELECT * FROM rentalent.customers WHERE customerID='" + customerId + "';";
 		try {
 			Statement stmt = dbConn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -643,7 +652,7 @@ public class ClientHandler implements Runnable {
 	// Example for deleting a Customer record by ID
 
 	private void deleteCustomerById(String customerId) {
-		String sql = "DELETE FROM dblab.customers WHERE customerID='" + customerId + "';";
+		String sql = "DELETE FROM rentalent.customers WHERE customerID='" + customerId + "';";
 		try {
 			Statement stmt = dbConn.createStatement();
 
@@ -658,7 +667,7 @@ public class ClientHandler implements Runnable {
 	}
 
 	private void addTransactionToDatabase(Transaction1 transaction) {
-	    String sql = "INSERT INTO Transaction(transactionID, transactionDate, amountPaid)" +
+	    String sql = "INSERT INTO rentalent.transaction(transactionID, transactionDate, amountPaid)" +
 	            " VALUES('" + transaction.getTransactionID() + "','" + transaction.getTransactionDate() +
 	            "','" + transaction.getAmountPaid() + "');";
 	    try {
@@ -675,7 +684,7 @@ public class ClientHandler implements Runnable {
 	}
 
 	private void addRentalRequestToDatabase(RentalRequest rentalRequest) {
-	    String sql = "INSERT INTO RentalRequest(requestID, rentalDate, quotationCost, rentalStatus)" +
+	    String sql = "INSERT INTO rentalent.RentalRequest(requestID, rentalDate, quotationCost, rentalStatus)" +
 	            " VALUES('" + rentalRequest.getRequestID() + "','" + rentalRequest.getRentalDate() +
 	            "','" + rentalRequest.getQuotationCost() + "','" + rentalRequest.isRentalStatus() + "');";
 	    try {
@@ -692,8 +701,9 @@ public class ClientHandler implements Runnable {
 	}
 
 	private void addMessageToDatabase(CustomerMessage message) {
-	    String sql = "INSERT INTO Message(messageID, messageContent)" +
-	            " VALUES('" + message.getMessageID() + "','" + message.getMessageContent() + "');";
+	    String sql = "INSERT INTO customermessage(messageID,customerID,messageContent,employeeResponse)" +
+	            " VALUES('" + message.getMessageID() + "','" + message.getCustomerID()+ "','" 
+	    		+ message.getMessageContent() + "','" + message.getEmployeeResponse()+ "');";
 	    try {
 	        Statement stmt = dbConn.createStatement();
 

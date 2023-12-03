@@ -10,7 +10,7 @@ public class Equipment implements Serializable {
 	private String equipmentID;
     private String equipmentName;
     private String equipmentCategory;
-    private boolean isAvailable;
+    private int isAvailable;
     private double price;
     // Other equipment attributes, getters, setters, and methods
 	public Equipment() {
@@ -31,7 +31,7 @@ public class Equipment implements Serializable {
 	 * @param equipmentCategory
 	 * @param availabilityStatus
 	 */
-	public Equipment(String equipmentID, String equipmentName, String equipmentCategory, boolean availabilityStatus) {
+	public Equipment(String equipmentID, String equipmentName, String equipmentCategory, int availabilityStatus) {
 		
 		this.equipmentID = equipmentID;
 		this.equipmentName = equipmentName;
@@ -56,17 +56,16 @@ public class Equipment implements Serializable {
 	public void setEquipmentCategory(String equipmentCategory) {
 		this.equipmentCategory = equipmentCategory;
 	}
-	public boolean isAvailabilityStatus() {
+	public int isAvailabilityStatus() {
 		return isAvailable;
 	}
-	public void setAvailabilityStatus(boolean availabilityStatus) {
-		this.isAvailable = availabilityStatus;
+	public void setAvailabilityStatus(boolean isAvailable) {
+	    this.isAvailable = isAvailable ? 1 : 0;
 	}
+
 	public double getPrice() {
 		return price;
 	}
-
-
 	public void setPrice(double price) {
 		this.price = price;
 	}
