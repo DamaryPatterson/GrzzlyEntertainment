@@ -58,7 +58,8 @@ public class ClientHandler implements Runnable {
 							break;
 						case "Find Customer":
 							String customerId = (String) objIs.readObject();
-							Customer foundCustomer = findCustomerById(customerId);
+							String custPassword= (String) objIs.readObject();
+							Customer foundCustomer = findCustomerByIdAndPassword(customerId,custPassword);
 							objOs.writeObject(foundCustomer);
 							break;
 						case "Update Customer":
@@ -583,22 +584,7 @@ public class ClientHandler implements Runnable {
 	    return equipment;
 	}
 
-	public boolean authenticateEmployee(String username, String password) {
-	    try {
-	        String sql = "SELECT * FROM employee WHERE username = ? AND password = ?";
-	        PreparedStatement pstmt = dbConn.prepareStatement(sql);
-	        pstmt.setString(1, username);
-	        pstmt.setString(2, password);
-	        ResultSet rs = pstmt.executeQuery();
-	        
-	        // If there's at least one result, authentication succeeds
-	        return rs.next();
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    // Return false in case of exceptions or no matching record
-	    return false;
-	}
+
 	private Employee findEmployeeByIdAndPassword(String ID, String password) {
 	    Employee employee = null;
 	    try {
@@ -682,12 +668,16 @@ public class ClientHandler implements Runnable {
 		}
 	}
 	// Example for finding a Customer record by ID
-	private Customer findCustomerById(String customerId) {
+	private Customer findCustomerByIdAndPassword(String customerId,String password) {
 		Customer customer = new Customer();
-		String sql = "SELECT * FROM rentalent.customer WHERE customerID='" + customerId + "';";
+		
 		try {
-			Statement stmt = dbConn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			String sql = "SELECT * FROM rentalent.customer WHERE customerID= ? AND password = ?";
+			PreparedStatement stmt = dbConn.prepareStatement(sql);
+			stmt.setString(1, customerId);
+	        stmt.setString(2, password);
+			
+			ResultSet rs = stmt.executeQuery();
 
 			if (rs.next()) {
 	            customer.setCustomerID(rs.getString(1));
@@ -696,10 +686,12 @@ public class ClientHandler implements Runnable {
 	            customer.setAccountBalance(rs.getDouble(4));
 	            
 	        }
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return customer;
+
 	}
 	// Example for deleting a Customer record by ID
 

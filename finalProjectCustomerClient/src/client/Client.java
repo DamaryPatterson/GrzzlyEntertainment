@@ -8,8 +8,6 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import models.com.Inventory;
-
 import models.com.*;
 
 public class Client {
@@ -18,17 +16,10 @@ public class Client {
 	private ObjectOutputStream objOs;
 	private ObjectInputStream objIs;
 	private String action = "";
-	private boolean isLogin;
 	
 	//need to log client side the minute you see this
 	
 	
-	public boolean isLoginStatus() {
-		return isLogin;
-	}
-	public void setLoginStatus(boolean loginStatus) {
-		this.isLogin = loginStatus;
-	}
 	public Client() {
 		this.createConnection();
 		this.configureStreams();
@@ -50,22 +41,53 @@ public class Client {
 		}
 	}
 	
-	public void receiveResponse() {
+	public void closeConnection() {
+		try {
+			objOs.close();
+			objIs.close();
+			connectionSocket.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendCustomer(Customer customerObj) {
+		try {
+			objOs.writeObject(customerObj);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void sendAction(String action) {
+		this.action = action;
+		try {
+			objOs.writeObject(action);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public boolean receiveResponse() {
+		boolean flag = false;
 		try {
 
 			if(action.equalsIgnoreCase("Add Customer")) {
-				Boolean flag = (Boolean) objIs.readObject();
+				flag = (Boolean) objIs.readObject();
 				if(flag == true) {
 					JOptionPane.showMessageDialog(null, "Account Created Successfully", 
 							"Customer Account Creation Status", JOptionPane.INFORMATION_MESSAGE);
 				}
+				else {
+					System.out.println("\nFailed:");
+				}
 			}
 			if(action.equalsIgnoreCase("Find Customer")) {
 				Customer customer = new Customer();
-				customer=null;
 				customer =(Customer)objIs.readObject();
 				if(customer==null) {
 					JOptionPane.showMessageDialog(null, "No record found","status",JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					flag = true;
 				}
 				System.out.println(customer);
 			}
@@ -79,7 +101,7 @@ public class Client {
 			
 			
 			if(action.equalsIgnoreCase("Add Equipment")) {
-				Boolean flag = (Boolean) objIs.readObject();
+				flag = (Boolean) objIs.readObject();
 				if(flag == true) {
 					JOptionPane.showMessageDialog(null, "Account Created Successfully", 
 							"Customer Account Creation Status", JOptionPane.INFORMATION_MESSAGE);
@@ -103,7 +125,7 @@ public class Client {
 			
 			
 			if(action.equalsIgnoreCase("Add Message")) {
-				Boolean flag = (Boolean) objIs.readObject();
+				flag = (Boolean) objIs.readObject();
 				if(flag == true) {
 					JOptionPane.showMessageDialog(null, "Message Sent Successfully", 
 							"Message Status", JOptionPane.INFORMATION_MESSAGE);
@@ -127,15 +149,15 @@ public class Client {
 			
 			
 			if(action.equalsIgnoreCase("Add Transaction")) {
-				Boolean flag = (Boolean) objIs.readObject();
+				flag = (Boolean) objIs.readObject();
 				if (flag) {
 					JOptionPane.showMessageDialog(null, "Message Sent Successfully", 
 							"Message Status", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 			if(action.equalsIgnoreCase("Find Transaction")) {
-				Transaction transaction = new Transaction();
-				transaction =(Transaction)objIs.readObject();
+				Transaction1 transaction = new Transaction1();
+				transaction =(Transaction1)objIs.readObject();
 				if(transaction==null) {
 					JOptionPane.showMessageDialog(null, "No record found","status",JOptionPane.ERROR_MESSAGE);
 				}
@@ -152,7 +174,7 @@ public class Client {
 			
 			
 			if(action.equalsIgnoreCase("Add Rental Request")) {
-				Boolean flag = (Boolean) objIs.readObject();
+				flag = (Boolean) objIs.readObject();
 				if (flag) {
 					JOptionPane.showMessageDialog(null, "Message Sent Successfully", 
 							"Message Status", JOptionPane.INFORMATION_MESSAGE);
@@ -177,7 +199,7 @@ public class Client {
 			
 			
 			if(action.equalsIgnoreCase("Add Employee")) {
-				Boolean flag = (Boolean) objIs.readObject();
+				flag = (Boolean) objIs.readObject();
 				if (flag) {
 					JOptionPane.showMessageDialog(null, "Message Sent Successfully", 
 							"Message Status", JOptionPane.INFORMATION_MESSAGE);
@@ -188,7 +210,10 @@ public class Client {
 				employee = (Employee) objIs.readObject();
 				if(employee==null) {
 					JOptionPane.showMessageDialog(null, "Record could not be found", "Find Record Status", JOptionPane.ERROR_MESSAGE);
-					return;
+					flag=false;
+				}
+				else {
+					flag=true;
 				}
 				System.out.println(employee);
 			}
@@ -206,34 +231,25 @@ public class Client {
 			
 			
 			if(action.equalsIgnoreCase("Add Event")) {
-				Boolean flag = (Boolean) objIs.readObject();
-				isLogin = flag;
+				flag = (Boolean) objIs.readObject();
+				if (flag) {
+					JOptionPane.showMessageDialog(null, "Message Sent Successfully", 
+							"Message Status", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 			if(action.equalsIgnoreCase("Find Event")) {
-				Boolean flag = (Boolean) objIs.readObject();
-				isLogin = flag;
+				flag = (Boolean) objIs.readObject();
+				if (flag) {
+					JOptionPane.showMessageDialog(null, "Message Sent Successfully", 
+							"Message Status", JOptionPane.INFORMATION_MESSAGE);
+				}
+
 			}
 			if(action.equalsIgnoreCase("Update Event")) {
 				
 			}
 			if(action.equalsIgnoreCase("Delete Event")) {
 				
-			}
-			
-			
-			
-			
-			
-			
-			
-			
-			if(action.equalsIgnoreCase("Customer Login")) {
-				Boolean flag = (Boolean) objIs.readObject();
-				isLogin = flag;
-			}
-			if(action.equalsIgnoreCase("Employee Login")) {
-				Boolean flag = (Boolean) objIs.readObject();
-				isLogin = flag;
 			}
 		}catch(ClassCastException ex) {
 			ex.printStackTrace();
@@ -245,29 +261,20 @@ public class Client {
 
 			ex.printStackTrace();
 		}
+		return flag;
 	}
 	
-	public void closeConnection() {
+	public void sendEvent(Event eventObj) {
 		try {
-			objOs.close();
-			objIs.close();
-			connectionSocket.close();
+			objOs.writeObject(eventObj);
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void sendCustomer(Customer customerObj) {
+	public void sendEmployee(Employee emp) {
 		try {
-			objOs.writeObject(customerObj);
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void sendEmployee(Equipment employeeObj) {
-		try {
-			objOs.writeObject(employeeObj);
+			objOs.writeObject(emp);
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -289,7 +296,7 @@ public class Client {
 		}
 	}
 	
-	public void sendTransaction(Transaction transactionObj) {
+	public void sendTransaction(Transaction1 transactionObj) {
 		try {
 			objOs.writeObject(transactionObj);
 		}catch(IOException e) {
@@ -305,14 +312,7 @@ public class Client {
 		}
 	}
 	
-	public void sendAction(String action) {
-		this.action = action;
-		try {
-			objOs.writeObject(action);
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
+	
 	
 	public void sendCustomerId(String customerId) {
 		try {
@@ -369,12 +369,10 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public void sendLoginDetails(int id, String username, String password) {
+		
+	public void sendLoginDetails( String id, String password) {
 		try {
             objOs.writeObject(id);
-            objOs.writeObject(username);
             objOs.writeObject(password);
         } catch (IOException e) {
             e.printStackTrace();
@@ -389,6 +387,23 @@ public class Client {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<RentalRequest> viewAllRequest(){
+		List<RentalRequest> result =null;
+		try {
+			result =(List<RentalRequest>)objIs.readObject();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<Equipment> retrieveAllAvailableEquipmentsResponse() {
 		List<Equipment> result = null;
@@ -467,5 +482,6 @@ public class Client {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub	
 		new Client();
+		
 	}
 }

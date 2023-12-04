@@ -1,6 +1,9 @@
 package view;
 
 import javax.swing.*;
+
+import client.Client;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,20 +14,20 @@ public class CustomerSignIn extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField usernameField;
+	private JTextField idField;
     private JPasswordField passwordField;
     private JButton signInButton;
+    private Client client= new Client();
 
     public CustomerSignIn() {
         initializeComponents();
         setLayout();
-        addComponents();
         setWindowsProperty();
         addSignInListener();
     }
 
     private void initializeComponents() {
-        usernameField = new JTextField(15);
+        idField = new JTextField(15);
         passwordField = new JPasswordField(15);
         signInButton = new JButton("Sign In");
     }
@@ -32,17 +35,13 @@ public class CustomerSignIn extends JFrame {
     private void setLayout() {
         setLayout(new BorderLayout());
         JPanel panel = new JPanel(new GridLayout(3, 2));
-        panel.add(new JLabel("Username: "));
-        panel.add(usernameField);
+        panel.add(new JLabel("ID: "));
+        panel.add(idField);
         panel.add(new JLabel("Password: "));
         panel.add(passwordField);
         panel.add(new JLabel(""));
         panel.add(signInButton);
         add(panel, BorderLayout.CENTER);
-    }
-
-    private void addComponents() {
-        // Add action listener for sign-in button if needed
     }
 
     private void setWindowsProperty() {
@@ -57,19 +56,31 @@ public class CustomerSignIn extends JFrame {
         signInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
+                String id = idField.getText();
+                String password = new String(passwordField.getPassword());
                 // For demo purposes, just check if fields are not empty
-                if (!username.isEmpty() && passwordField.getPassword().length > 0) {
-                    // Assuming successful sign-in; create and show CustomerDashboard
-                    new CustomerDashboard();
-                    dispose(); // Close sign-in page after successful sign-in
-                } else {
-                    JOptionPane.showMessageDialog(view.CustomerSignIn.this,
-                            "Invalid username or password",
-                            "Sign In Error", JOptionPane.ERROR_MESSAGE);
-                }
+                try {
+					client.sendAction("Find Customer");
+					client.sendLoginDetails(id, password); // Call your method here to send details to server
+					boolean loginResult = client.receiveResponse(); // Modify receiveResponse to return a boolean
+					if (loginResult) {
+					    JOptionPane.showMessageDialog(null, "Login Successful!");
+					    new CustomerDashboard();
+					    // Add code to navigate to the next screen or perform necessary actions on successful login
+					} else {
+					    JOptionPane.showMessageDialog(null, "Login Failed. Please check your credentials.");
+					}
+					clearFields();
+				} catch (HeadlessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
+    }
+    public void clearFields() {
+    	idField.setText("");
+    	passwordField.setText("");
     }
 
     public static void main(String[] args) {
