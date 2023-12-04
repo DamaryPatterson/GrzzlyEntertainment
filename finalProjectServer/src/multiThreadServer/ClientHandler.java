@@ -12,6 +12,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -28,6 +30,7 @@ import models.com.RentalRequest;
 import models.com.Transaction1;
 
 public class ClientHandler implements Runnable {
+	private static Logger logger = LogManager.getLogger(ClientHandler.class.getName());
 	private Socket clientSocket;
 	private ObjectInputStream objIs;
 	private ObjectOutputStream objOs;
@@ -260,17 +263,27 @@ public class ClientHandler implements Runnable {
 						
 						}
 					}
+					logger.info("Gets Data From the client Sucessfully");
 				} catch (ClassCastException | ClassNotFoundException e) {
 					e.printStackTrace();
+					logger.error("Failed to get Data From The client");
 				}
-				objOs.close();
-				objIs.close();
-				clientSocket.close();
+				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-
+			try {
+				objOs.close();
+				objIs.close();
+				clientSocket.close();
+				logger.info("Closed Objects and socket successfully");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				logger.error("Could not Close Objects and socket");
+				e.printStackTrace();
+				
+			}
 		}
 	}
 	

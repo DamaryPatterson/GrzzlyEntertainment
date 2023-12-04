@@ -19,17 +19,17 @@ public class FinalClientDriver {
 //			client.receiveResponse();
 //			System.out.println("Response recieved from server");
 
-			Employee emp = new Employee("2000", "empTest", "login");
-//			client.sendAction("Add Employee");
-//			System.out.println("Message sent to server");
-//			client.sendEmployee(emp);
-//			System.out.println("record Sent to server");
-//			client.receiveResponse();
-//			System.out.println("Response recieved from server");
+			Employee emp = new Employee("2001", "panther", "test");
+			client.sendAction("Add Employee");
+			System.out.println("Message sent to server");
+			client.sendEmployee(emp);
+			System.out.println("record Sent to server");
+			client.receiveResponse();
+			System.out.println("Response recieved from server");
 //		
-		client.sendAction("Find Customer");
-		client.sendCustomerId("2001463");
-		client.receiveResponse();
+//			client.sendAction("Find Customer");
+//			client.sendCustomerId("2001463");
+//			client.receiveResponse();
 //		
 			client.closeConnection();
 		} catch (Exception e) {

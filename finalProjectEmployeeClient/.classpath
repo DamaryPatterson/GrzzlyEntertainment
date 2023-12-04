@@ -6,6 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="Resources"/>
 	<classpathentry kind="lib" path="C:/hibernate-release-5.4.18.Final/lib/required/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="C:/hibernate-release-5.4.18.Final/lib/required/byte-buddy-1.10.10.jar"/>
 	<classpathentry kind="lib" path="C:/hibernate-release-5.4.18.Final/lib/required/classmate-1.5.1.jar"/>
