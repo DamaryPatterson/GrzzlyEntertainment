@@ -8,8 +8,11 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.*;
+
 public class AppServer {
 
+	private static Logger logger = LogManager.getLogger(AppServer.class.getName());
 	private static final int PORT = 8888;
     private ServerSocket serverSocket;
     private static Connection dbConn;
@@ -69,12 +72,15 @@ public class AppServer {
 	}
 
 	public static void main(String[] args) {
+		 //System.setProperty("log4j.configurationFile", "log4j2.xml");
         try {
 			new AppServer();
-
+			logger.info("Server Started SuccessFully");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error("Server Failed To Start :");
+			
 		}
     }
 }
