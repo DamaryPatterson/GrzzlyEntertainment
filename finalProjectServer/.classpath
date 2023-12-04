@@ -6,6 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="lib" path="C:/Users/pc/OneDrive - The University of Technology,Jamaica/Desktop/Utech2023-2024Sem1/Advanced Programming/mysql-connector-j-8.1.0/mysql-connector-j-8.1.0/mysql-connector-j-8.1.0.jar"/>
 	<classpathentry kind="lib" path="C:/spring-framework-5.1.16.RELEASE/libs/spring-aop-5.1.16.RELEASE.jar"/>
 	<classpathentry kind="lib" path="C:/spring-framework-5.1.16.RELEASE/libs/spring-aop-5.1.16.RELEASE-javadoc.jar"/>

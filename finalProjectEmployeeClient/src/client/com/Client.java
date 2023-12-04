@@ -8,10 +8,14 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import models.com.*;
 
 public class Client {
 
+	private static Logger logger = LogManager.getLogger(Client.class.getName());
 	private Socket connectionSocket;
 	private ObjectOutputStream objOs;
 	private ObjectInputStream objIs;
@@ -69,7 +73,7 @@ public class Client {
 	public boolean receiveResponse() {
 		boolean flag = false;
 		try {
-
+			
 			if(action.equalsIgnoreCase("Add Customer")) {
 				flag = (Boolean) objIs.readObject();
 				if(flag == true) {
@@ -268,14 +272,17 @@ public class Client {
 			if(action.equalsIgnoreCase("Employee Login")) {
 				flag = (Boolean) objIs.readObject();
 			}
+			logger.info("Getting Responses Succesfully");
 		}catch(ClassCastException ex) {
 			ex.printStackTrace();
+			logger.error("There is a ClassCastError");
 
 		}catch(ClassNotFoundException ex) {
 
 			ex.printStackTrace();
+			logger.error("There is a ClassNotFound error");
 		}catch(IOException ex) {
-
+			logger.error("There is a Input/Output error");
 			ex.printStackTrace();
 		}
 		return flag;
@@ -498,7 +505,14 @@ public class Client {
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub	
-		new Client();
+		try {
+			new Client();
+			logger.info("Client Started Successfully");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("Error Starting Client");
+			e.printStackTrace();
+		}
 		
 	}
 }

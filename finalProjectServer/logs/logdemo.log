@@ -1,0 +1,5 @@
+00:34:20.194 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+00:48:02.142 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+00:48:19.836 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+00:48:26.414 [main] ERROR multiThreadServer.AppServer - Server Failed To Start :
+01:01:00.571 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully

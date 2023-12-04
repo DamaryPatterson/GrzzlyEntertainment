@@ -73,14 +73,15 @@ public class AppServer {
 
 	public static void main(String[] args) {
 		 //System.setProperty("log4j.configurationFile", "log4j2.xml");
+		
         try {
+        	logger.info("Server Started SuccessFully");
 			new AppServer();
-			logger.info("Server Started SuccessFully");
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			logger.error("Server Failed To Start :");
-			
 		}
     }
 }
