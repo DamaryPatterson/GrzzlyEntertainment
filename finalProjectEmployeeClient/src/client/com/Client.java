@@ -21,9 +21,6 @@ public class Client {
 	private ObjectInputStream objIs;
 	private String action = "";
 	
-	//need to log client side the minute you see this
-	
-	
 	public Client() {
 		this.createConnection();
 		this.configureStreams();
@@ -82,16 +79,26 @@ public class Client {
 				}
 				else {
 					System.out.println("\nFailed:");
+					logger.error("Could Not Add Customer");
 				}
 			}
-			if(action.equalsIgnoreCase("Find Customer")) {
+			if(action.equalsIgnoreCase("Customer Login")) {
 				Customer customer = new Customer();
-				customer=null;
 				customer =(Customer)objIs.readObject();
 				if(customer==null) {
 					JOptionPane.showMessageDialog(null, "No record found","status",JOptionPane.ERROR_MESSAGE);
 				}
-				System.out.println(customer);
+				else {
+					flag = true;
+				}
+			}
+			if(action.equalsIgnoreCase("Find Customer")) {
+				Customer custObj = new Customer();
+				custObj =(Customer)objIs.readObject();
+				if(custObj==null) {
+					JOptionPane.showMessageDialog(null, "No record found","status",JOptionPane.ERROR_MESSAGE);
+				}
+				System.out.println(custObj);
 			}
 			if(action.equalsIgnoreCase("Update Customer")) {
 				
@@ -207,7 +214,7 @@ public class Client {
 							"Message Status", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
-			if(action.equalsIgnoreCase("Find Employee")) {
+			if(action.equalsIgnoreCase("Employee Login")) {
 				Employee employee = new Employee();
 				employee = (Employee) objIs.readObject();
 				if(employee==null) {
@@ -217,7 +224,14 @@ public class Client {
 				else {
 					flag=true;
 				}
-				System.out.println(employee);
+			}
+			if(action.equalsIgnoreCase("Find Employee")) {
+				Employee emp = new Employee();
+				emp =(Employee)objIs.readObject();
+				if(emp==null) {
+					JOptionPane.showMessageDialog(null, "No record found","status",JOptionPane.ERROR_MESSAGE);
+				}
+				System.out.println(emp);
 			}
 			if(action.equalsIgnoreCase("Update Employee")) {
 				
@@ -362,7 +376,7 @@ public class Client {
 		}
 	}
 	
-	public void sendMessageId(int messageId) {
+	public void sendMessageId(String messageId) {
 		try {
 			objOs.writeObject(messageId);
 		}catch(IOException e) {
@@ -370,7 +384,7 @@ public class Client {
 		}
 	}
 	
-	public void sendTransactionId(int transactionId) {
+	public void sendTransactionId(String transactionId) {
 		try {
 			objOs.writeObject(transactionId);
 		}catch(IOException e) {
@@ -378,7 +392,7 @@ public class Client {
 		}
 	}
 	
-	public void sendRentalRequestId(int rentalRequestId) {
+	public void sendRentalRequestId(String rentalRequestId) {
 		try {
 			objOs.writeObject(rentalRequestId);
 		}catch(IOException e) {

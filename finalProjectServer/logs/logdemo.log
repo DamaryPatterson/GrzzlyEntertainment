@@ -481,3 +481,20 @@
 01:30:16.623 [Thread-3] TRACE org.hibernate.context.internal.ThreadLocalSessionContext - Allowing proxy invocation [isOpen] to proceed to real session
 01:30:16.623 [Thread-3] INFO  multiThreadServer.ClientHandler - Gets Data From the client Sucessfully
 01:30:44.088 [Hibernate Connection Pool Validation Thread] DEBUG org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - Connection pool now considered primed; min-size will be maintained
+02:27:13.296 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+02:28:19.795 [Thread-0] INFO  multiThreadServer.ClientHandler - Gets Data From the client Sucessfully
+02:28:19.797 [Thread-0] INFO  multiThreadServer.ClientHandler - Gets Data From the client Sucessfully
+02:28:19.813 [Thread-0] INFO  multiThreadServer.ClientHandler - Closed Objects and socket successfully
+02:39:03.587 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+02:39:13.433 [Thread-0] ERROR multiThreadServer.ClientHandler - Could not Close Objects and socket
+02:42:57.515 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+02:43:06.134 [Thread-0] INFO  multiThreadServer.ClientHandler - Gets Data From the client Sucessfully
+02:43:06.152 [Thread-0] INFO  multiThreadServer.ClientHandler - Closed Objects and socket successfully
+02:46:29.757 [Thread-1] INFO  multiThreadServer.ClientHandler - Gets Data From the client Sucessfully
+02:46:29.778 [Thread-1] INFO  multiThreadServer.ClientHandler - Closed Objects and socket successfully
+02:53:12.926 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+02:53:21.038 [Thread-0] INFO  multiThreadServer.ClientHandler - Gets Data From the client Sucessfully
+02:53:21.058 [Thread-0] INFO  multiThreadServer.ClientHandler - Closed Objects and socket successfully
+02:56:41.501 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+02:56:48.926 [Thread-0] INFO  multiThreadServer.ClientHandler - Gets Data From the client Sucessfully
+02:56:48.965 [Thread-0] INFO  multiThreadServer.ClientHandler - Closed Objects and socket successfully

@@ -44,7 +44,7 @@ public class EmployeeSignIn {
                 String id = idField.getText();
                 String password = new String(passwordField.getPassword());
                 
-                client.sendAction("Find Employee");
+                client.sendAction("Employee Login");
                 client.sendLoginDetails(id, password); // Call your method here to send details to server
                 boolean loginResult = client.receiveResponse(); // Modify receiveResponse to return a boolean
                 if (loginResult) {

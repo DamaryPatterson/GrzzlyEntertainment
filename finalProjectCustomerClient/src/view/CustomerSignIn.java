@@ -60,7 +60,7 @@ public class CustomerSignIn extends JFrame {
                 String password = new String(passwordField.getPassword());
                 // For demo purposes, just check if fields are not empty
                 try {
-					client.sendAction("Find Customer");
+					client.sendAction("Customer Login");
 					client.sendLoginDetails(id, password); // Call your method here to send details to server
 					boolean loginResult = client.receiveResponse(); // Modify receiveResponse to return a boolean
 					if (loginResult) {

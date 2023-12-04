@@ -8,10 +8,14 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import models.com.*;
 
 public class Client {
 
+	private static Logger logger = LogManager.getLogger(Client.class.getName());
 	private Socket connectionSocket;
 	private ObjectOutputStream objOs;
 	private ObjectInputStream objIs;
@@ -69,7 +73,7 @@ public class Client {
 	public boolean receiveResponse() {
 		boolean flag = false;
 		try {
-
+			
 			if(action.equalsIgnoreCase("Add Customer")) {
 				flag = (Boolean) objIs.readObject();
 				if(flag == true) {
@@ -80,7 +84,7 @@ public class Client {
 					System.out.println("\nFailed:");
 				}
 			}
-			if(action.equalsIgnoreCase("Find Customer")) {
+			if(action.equalsIgnoreCase("Customer Login")) {
 				Customer customer = new Customer();
 				customer =(Customer)objIs.readObject();
 				if(customer==null) {
@@ -205,7 +209,7 @@ public class Client {
 							"Message Status", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
-			if(action.equalsIgnoreCase("Find Employee")) {
+			if(action.equalsIgnoreCase("Employee Login")) {
 				Employee employee = new Employee();
 				employee = (Employee) objIs.readObject();
 				if(employee==null) {
@@ -216,6 +220,13 @@ public class Client {
 					flag=true;
 				}
 				System.out.println(employee);
+			}
+			if(action.equalsIgnoreCase("Find Employee")) {
+				Employee emp = new Employee();
+				emp =(Employee)objIs.readObject();
+				if(emp==null) {
+					JOptionPane.showMessageDialog(null, "No record found","status",JOptionPane.ERROR_MESSAGE);
+				}
 			}
 			if(action.equalsIgnoreCase("Update Employee")) {
 				
@@ -251,14 +262,36 @@ public class Client {
 			if(action.equalsIgnoreCase("Delete Event")) {
 				
 			}
+			
+			
+			
+			
+			
+			
+			
+			
+			if(action.equalsIgnoreCase("Customer Login")) {
+				flag = (Boolean) objIs.readObject();
+				if (flag) {
+					JOptionPane.showMessageDialog(null, "Message Sent Successfully", 
+							"Message Status", JOptionPane.INFORMATION_MESSAGE);
+				}
+
+			}
+			if(action.equalsIgnoreCase("Employee Login")) {
+				flag = (Boolean) objIs.readObject();
+			}
+			logger.info("Getting Responses Succesfully");
 		}catch(ClassCastException ex) {
 			ex.printStackTrace();
+			logger.error("There is a ClassCastError");
 
 		}catch(ClassNotFoundException ex) {
 
 			ex.printStackTrace();
+			logger.error("There is a ClassNotFound error");
 		}catch(IOException ex) {
-
+			logger.error("There is a Input/Output error");
 			ex.printStackTrace();
 		}
 		return flag;
@@ -338,7 +371,7 @@ public class Client {
 		}
 	}
 	
-	public void sendMessageId(int messageId) {
+	public void sendMessageId(String messageId) {
 		try {
 			objOs.writeObject(messageId);
 		}catch(IOException e) {
@@ -346,7 +379,7 @@ public class Client {
 		}
 	}
 	
-	public void sendTransactionId(int transactionId) {
+	public void sendTransactionId(String transactionId) {
 		try {
 			objOs.writeObject(transactionId);
 		}catch(IOException e) {
@@ -354,7 +387,7 @@ public class Client {
 		}
 	}
 	
-	public void sendRentalRequestId(int rentalRequestId) {
+	public void sendRentalRequestId(String rentalRequestId) {
 		try {
 			objOs.writeObject(rentalRequestId);
 		}catch(IOException e) {
@@ -481,7 +514,14 @@ public class Client {
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub	
-		new Client();
+		try {
+			new Client();
+			logger.info("Client Started Successfully");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("Error Starting Client");
+			e.printStackTrace();
+		}
 		
 	}
 }
