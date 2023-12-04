@@ -56,7 +56,7 @@ public class ClientHandler implements Runnable {
 			configureStreams();
 			
 			while (true) {
-				try {
+				
 					if (clientSocket != null) {
 						String action = "";
 						action = (String) objIs.readObject();
@@ -169,7 +169,7 @@ public class ClientHandler implements Runnable {
 							break;
 						case "Delete Event":
 							String delEventId = (String) objIs.readObject();
-							deleteEventById(delEventId);
+							deleteEvent(delEventId);
 							objOs.writeObject(true);
 							break;
 
@@ -265,15 +265,15 @@ public class ClientHandler implements Runnable {
 						objOs.writeObject("Action Completed");
 		                objOs.flush(); // Flush the stream to ensure data is sent immediately
 		                logger.info("Action Completed");
+		                logger.info("Gets Data From the client Sucessfully");
 					}
-					logger.info("Gets Data From the client Sucessfully"); 
-				} catch (ClassCastException | ClassNotFoundException e) {
-					e.printStackTrace();
-					logger.error("Failed to get Data From The client");
-				}
 			}
+					 
 		} catch (IOException e) {
 			logger.error("There is an error here that Forces termination");
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		closeConnection();
@@ -374,22 +374,6 @@ public class ClientHandler implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
-	private void deleteEventById(String delEventId) {
-		try {
-			String sql = "DELETE FROM event WHERE eventID = '" + delEventId + "';";
-			Statement stmt = dbConn.createStatement();
-			int rowsAffected = stmt.executeUpdate(sql);
-			if (rowsAffected > 0) {
-				objOs.writeObject(true);
-			} else {
-				objOs.writeObject(false);
-			}
-		} catch (SQLException | IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	private void deleteEquipmentStockById(String delEquipStockId) {
 		try {
 			String sql = "DELETE FROM inventory WHERE equipmentID = '" + delEquipStockId + "';";
@@ -888,12 +872,30 @@ public class ClientHandler implements Runnable {
 	}
 
 	public void deleteEvent(String eventID) {
-		Event event = new Event();
-		Session session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		event = session.get(Event.class, eventID);
-		event.setEventName(event.getEventName());
-		transaction.commit();
-		session.clear();
+	    Session session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
+	    Transaction transaction = null;
+	    
+	    try {
+	        transaction = session.beginTransaction();
+	        Event event = session.get(Event.class, eventID);
+	        if (event != null) {
+	            session.delete(event);
+	            transaction.commit();
+	            logger.info("Deleted Event using Hibernate");
+	        } else {
+	            System.out.println("Event with ID " + eventID + " not found.");
+	            
+	        }
+	    } catch (Exception e) {
+	        if (transaction != null) {
+	            transaction.rollback();
+	        }
+	        e.printStackTrace();
+	    } finally {
+	    	if (session != null && session.isOpen()) {
+	            session.close();
+	        }
+	    }
 	}
+
 }

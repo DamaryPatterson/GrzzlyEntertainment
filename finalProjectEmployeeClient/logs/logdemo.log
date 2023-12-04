@@ -22,3 +22,14 @@
 03:53:21.133 [main] ERROR client.com.Client - There is a ClassCastError
 03:54:31.425 [main] INFO  client.com.Client - Getting Responses Succesfully
 03:54:31.432 [main] INFO  client.com.Client - Getting Responses Succesfully
+04:00:32.030 [main] INFO  client.com.Client - Client Started Successfully
+04:00:37.711 [main] INFO  client.com.Client - Client Started Successfully
+04:00:39.978 [main] INFO  client.com.Client - Client Started Successfully
+04:05:57.879 [main] INFO  client.com.Client - Getting Responses Succesfully
+04:05:57.885 [main] INFO  client.com.Client - Getting Responses Succesfully
+04:09:15.835 [main] INFO  client.com.Client - Getting Responses Succesfully
+04:09:15.843 [main] INFO  client.com.Client - Getting Responses Succesfully
+04:11:39.272 [main] INFO  client.com.Client - Getting Responses Succesfully
+04:11:39.282 [main] INFO  client.com.Client - Getting Responses Succesfully
+04:14:29.456 [main] INFO  client.com.Client - Getting Responses Succesfully
+04:14:29.464 [main] INFO  client.com.Client - Getting Responses Succesfully

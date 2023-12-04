@@ -1,25 +1,218 @@
-03:34:17.351 [Thread-0] ERROR multiThreadServer.ClientHandler - Reached end of stream
-03:34:17.354 [Thread-0] ERROR multiThreadServer.ClientHandler - Reached end of stream
-03:34:17.354 [Thread-0] ERROR multiThreadServer.ClientHandler - Reached end of stream
-03:34:17.355 [Thread-0] ERROR multiThreadServer.ClientHandler - Reached end of stream
-03:34:17.355 [Thread-0] ERROR multiThreadServer.ClientHandler - Reached end of stream
-03:34:17.355 [Thread-0] ERROR multiThreadServer.ClientHandler - Reached end of stream
-03:34:17.355 [Thread-0] ERROR multiThreadServer.ClientHandler - Reached end of stream
-03:34:17.355 [Thread-0] ERROR multiThreadServer.ClientHandler - Reached end of stream
-03:34:17.355 [Thread-0] ERROR multiThreadServer.ClientHandler - Reached end of stream
-03:34:17.355 [Thread-0] ERROR multiThreadServer.ClientHandler - Reached end of stream
+04:14:31.704 [Thread-0] TRACE org.hibernate.service.internal.AbstractServiceRegistryImpl - Initializing service [role=org.hibernate.engine.query.spi.NativeQueryInterpreter]
+04:14:31.721 [Thread-0] DEBUG org.hibernate.secure.spi.JaccIntegrator - Skipping JACC integration as it was not enabled
+04:14:31.722 [Thread-0] DEBUG org.hibernate.internal.SessionFactoryImpl - Instantiated session factory
+04:14:31.724 [Thread-0] DEBUG org.hibernate.type.spi.TypeConfiguration$Scope - Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@51803f6b] to SessionFactoryImpl [org.hibernate.internal.SessionFactoryImpl@5aec871c]
+04:14:31.749 [Thread-0] TRACE org.hibernate.service.internal.AbstractServiceRegistryImpl - Initializing service [role=org.hibernate.persister.spi.PersisterFactory]
+04:14:31.754 [Thread-0] TRACE org.hibernate.service.internal.AbstractServiceRegistryImpl - Initializing service [role=org.hibernate.persister.spi.PersisterClassResolver]
+04:14:31.799 [Thread-0] TRACE org.hibernate.service.internal.AbstractServiceRegistryImpl - Initializing service [role=org.hibernate.property.access.spi.PropertyAccessStrategyResolver]
+04:14:31.805 [Thread-0] DEBUG org.hibernate.boot.internal.ClassLoaderAccessImpl - Not known whether passed class name [models.com.Event] is safe
+04:14:31.805 [Thread-0] DEBUG org.hibernate.boot.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : models.com.Event
+04:14:31.836 [Thread-0] DEBUG org.hibernate.boot.internal.ClassLoaderAccessImpl - Not known whether passed class name [models.com.Event] is safe
+04:14:31.836 [Thread-0] DEBUG org.hibernate.boot.internal.ClassLoaderAccessImpl - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : models.com.Event
+04:14:31.846 [Thread-0] TRACE org.hibernate.service.internal.AbstractServiceRegistryImpl - Initializing service [role=org.hibernate.bytecode.spi.ProxyFactoryFactory]
+04:14:32.215 [Thread-0] TRACE org.hibernate.persister.entity.AbstractPropertyMapping - Skipping duplicate registration of path [date], existing type = [org.hibernate.type.DateType@35163b55], incoming type = [org.hibernate.type.DateType@35163b55]
+04:14:32.216 [Thread-0] TRACE org.hibernate.persister.entity.AbstractPropertyMapping - Skipping duplicate registration of path [eventName], existing type = [org.hibernate.type.StringType@77bd93ed], incoming type = [org.hibernate.type.StringType@77bd93ed]
+04:14:32.225 [Thread-0] DEBUG org.hibernate.persister.entity.AbstractEntityPersister - Static SQL for entity: models.com.Event
+04:14:32.225 [Thread-0] DEBUG org.hibernate.persister.entity.AbstractEntityPersister -  Version select: select eventID from event where eventID =?
+04:14:32.226 [Thread-0] DEBUG org.hibernate.persister.entity.AbstractEntityPersister -  Snapshot select: select event_.eventID, event_.date as date2_0_, event_.eventName as eventnam3_0_ from event event_ where event_.eventID=?
+04:14:32.226 [Thread-0] DEBUG org.hibernate.persister.entity.AbstractEntityPersister -  Insert 0: insert into event (date, eventName, eventID) values (?, ?, ?)
+04:14:32.227 [Thread-0] DEBUG org.hibernate.persister.entity.AbstractEntityPersister -  Update 0: update event set date=?, eventName=? where eventID=?
+04:14:32.227 [Thread-0] DEBUG org.hibernate.persister.entity.AbstractEntityPersister -  Delete 0: delete from event where eventID=?
+04:14:32.257 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy -  Starting root entity : models.com.Event
+04:14:32.263 [Thread-0] DEBUG org.hibernate.loader.plan.build.internal.spaces.QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@40a3bade]
+04:14:32.264 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - Pushing fetch source to stack : org.hibernate.loader.plan.build.internal.returns.EntityReturnImpl@6d21c638
+04:14:32.265 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - .. Registering AssociationKey : AssociationKey(table=event, columns={eventID}) -> org.hibernate.loader.plan.build.internal.returns.EntityReturnImpl@6d21c638
+04:14:32.265 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - >> Starting entity identifier : models.com.Event
+04:14:32.266 [Thread-0] DEBUG org.hibernate.persister.walking.spi.MetamodelGraphWalker - Visiting attribute path : date
+04:14:32.266 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - >> Starting attribute Attribute(name=date, type=date [non-identifier])
+04:14:32.266 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - << Finishing up attribute : Attribute(name=date, type=date [non-identifier])
+04:14:32.266 [Thread-0] DEBUG org.hibernate.persister.walking.spi.MetamodelGraphWalker - Visiting attribute path : eventName
+04:14:32.266 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - >> Starting attribute Attribute(name=eventName, type=string [non-identifier])
+04:14:32.267 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - << Finishing up attribute : Attribute(name=eventName, type=string [non-identifier])
+04:14:32.267 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - Popped fetch owner from stack : org.hibernate.loader.plan.build.internal.returns.EntityReturnImpl@6d21c638
+04:14:32.267 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy -  Finished root entity : models.com.Event
+04:14:32.267 [Thread-0] DEBUG org.hibernate.loader.plan.build.internal.FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+04:14:32.283 [Thread-0] DEBUG org.hibernate.loader.plan.exec.internal.LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+04:14:32.289 [Thread-0] DEBUG org.hibernate.loader.plan.build.spi.LoadPlanTreePrinter - LoadPlan(entity=models.com.Event)
+    - Returns
+       - EntityReturnImpl(entity=models.com.Event, querySpaceUid=<gen:0>, path=models.com.Event)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=models.com.Event)
+          - SQL table alias mapping - event0_
+          - alias suffix - 0_
+          - suffixed key columns - {eventid1_0_0_}
 
-03:52:51.513 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
-03:52:59.197 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
-03:53:01.890 [main] ERROR multiThreadServer.AppServer - Server Failed To Start :
-03:53:13.363 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
-03:53:21.109 [Thread-0] INFO  multiThreadServer.ClientHandler - Action Completed
-03:53:21.112 [Thread-0] INFO  multiThreadServer.ClientHandler - Gets Data From the client Sucessfully
-03:53:21.131 [Thread-0] WARN  multiThreadServer.ClientHandler - Unrecognized Action
-03:53:21.131 [Thread-0] INFO  multiThreadServer.ClientHandler - Action Completed
-03:53:21.132 [Thread-0] INFO  multiThreadServer.ClientHandler - Gets Data From the client Sucessfully
-03:53:21.156 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
-03:53:21.158 [Thread-0] INFO  multiThreadServer.ClientHandler - Closed Objects and socket successfully
-03:54:31.403 [Thread-1] INFO  multiThreadServer.ClientHandler - Action Completed
-03:54:31.405 [Thread-1] INFO  multiThreadServer.ClientHandler - Gets Data From the client Sucessfully
-03:54:31.469 [Thread-1] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+04:14:32.296 [Thread-0] DEBUG org.hibernate.loader.entity.plan.EntityLoader - Static select for entity models.com.Event [NONE]: select event0_.eventID as eventid1_0_0_, event0_.date as date2_0_0_, event0_.eventName as eventnam3_0_0_ from event event0_ where event0_.eventID=?
+04:14:32.297 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy -  Starting root entity : models.com.Event
+04:14:32.297 [Thread-0] DEBUG org.hibernate.loader.plan.build.internal.spaces.QuerySpacesImpl - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@e17fa74]
+04:14:32.298 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - Pushing fetch source to stack : org.hibernate.loader.plan.build.internal.returns.EntityReturnImpl@2dd33b6e
+04:14:32.298 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - .. Registering AssociationKey : AssociationKey(table=event, columns={eventID}) -> org.hibernate.loader.plan.build.internal.returns.EntityReturnImpl@2dd33b6e
+04:14:32.298 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - >> Starting entity identifier : models.com.Event
+04:14:32.298 [Thread-0] DEBUG org.hibernate.persister.walking.spi.MetamodelGraphWalker - Visiting attribute path : date
+04:14:32.299 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - >> Starting attribute Attribute(name=date, type=date [non-identifier])
+04:14:32.299 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - << Finishing up attribute : Attribute(name=date, type=date [non-identifier])
+04:14:32.299 [Thread-0] DEBUG org.hibernate.persister.walking.spi.MetamodelGraphWalker - Visiting attribute path : eventName
+04:14:32.300 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - >> Starting attribute Attribute(name=eventName, type=string [non-identifier])
+04:14:32.300 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - << Finishing up attribute : Attribute(name=eventName, type=string [non-identifier])
+04:14:32.300 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy - Popped fetch owner from stack : org.hibernate.loader.plan.build.internal.returns.EntityReturnImpl@2dd33b6e
+04:14:32.300 [Thread-0] TRACE org.hibernate.loader.plan.build.internal.AbstractLoadPlanBuildingAssociationVisitationStrategy -  Finished root entity : models.com.Event
+04:14:32.301 [Thread-0] DEBUG org.hibernate.loader.plan.build.internal.FetchStyleLoadPlanBuildingAssociationVisitationStrategy - Building LoadPlan...
+04:14:32.301 [Thread-0] DEBUG org.hibernate.loader.plan.exec.internal.LoadQueryJoinAndFetchProcessor - processing queryspace <gen:0>
+04:14:32.302 [Thread-0] DEBUG org.hibernate.loader.plan.build.spi.LoadPlanTreePrinter - LoadPlan(entity=models.com.Event)
+    - Returns
+       - EntityReturnImpl(entity=models.com.Event, querySpaceUid=<gen:0>, path=models.com.Event)
+    - QuerySpaces
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=models.com.Event)
+          - SQL table alias mapping - event0_
+          - alias suffix - 0_
+          - suffixed key columns - {eventid1_0_0_}
+
+04:14:32.302 [Thread-0] DEBUG org.hibernate.loader.entity.plan.EntityLoader - Static select for entity models.com.Event [READ]: select event0_.eventID as eventid1_0_0_, event0_.date as date2_0_0_, event0_.eventName as eventnam3_0_0_ from event event0_ where event0_.eventID=?
+04:14:32.319 [Thread-0] DEBUG org.hibernate.loader.Loader - Static select for action ACTION_MERGE on entity models.com.Event: select event0_.eventID as eventid1_0_0_, event0_.date as date2_0_0_, event0_.eventName as eventnam3_0_0_ from event event0_ where event0_.eventID=?
+04:14:32.319 [Thread-0] DEBUG org.hibernate.loader.Loader - Static select for action ACTION_REFRESH on entity models.com.Event: select event0_.eventID as eventid1_0_0_, event0_.date as date2_0_0_, event0_.eventName as eventnam3_0_0_ from event event0_ where event0_.eventID=?
+04:14:32.339 [Thread-0] TRACE org.hibernate.metamodel.internal.MetadataContext - Wrapping up metadata context...
+04:14:32.339 [Thread-0] TRACE org.hibernate.metamodel.internal.MetadataContext - Starting entity [models.com.Event]
+04:14:32.340 [Thread-0] TRACE org.hibernate.metamodel.internal.AttributeFactory - Building identifier attribute [rentalent.eventID]
+04:14:32.340 [Thread-0] TRACE org.hibernate.metamodel.internal.AttributeFactory - Starting attribute metadata determination [eventID]
+04:14:32.341 [Thread-0] TRACE org.hibernate.metamodel.internal.AttributeFactory -     Determined member [private java.lang.String models.com.Event.eventID]
+04:14:32.342 [Thread-0] TRACE org.hibernate.metamodel.internal.AttributeFactory -     Determined type [name=string, class=org.hibernate.type.StringType]
+04:14:32.347 [Thread-0] TRACE org.hibernate.metamodel.internal.AttributeFactory - Building attribute [rentalent.date]
+04:14:32.347 [Thread-0] TRACE org.hibernate.metamodel.internal.AttributeFactory - Starting attribute metadata determination [date]
+04:14:32.348 [Thread-0] TRACE org.hibernate.metamodel.internal.AttributeFactory -     Determined member [private java.util.Date models.com.Event.date]
+04:14:32.349 [Thread-0] TRACE org.hibernate.metamodel.internal.AttributeFactory -     Determined type [name=date, class=org.hibernate.type.DateType]
+04:14:32.350 [Thread-0] TRACE org.hibernate.metamodel.internal.AttributeFactory - Building attribute [rentalent.eventName]
+04:14:32.350 [Thread-0] TRACE org.hibernate.metamodel.internal.AttributeFactory - Starting attribute metadata determination [eventName]
+04:14:32.350 [Thread-0] TRACE org.hibernate.metamodel.internal.AttributeFactory -     Determined member [private java.lang.String models.com.Event.eventName]
+04:14:32.350 [Thread-0] TRACE org.hibernate.metamodel.internal.AttributeFactory -     Determined type [name=string, class=org.hibernate.type.StringType]
+04:14:32.351 [Thread-0] TRACE org.hibernate.metamodel.internal.MetadataContext - Completed entity [models.com.Event]
+04:14:32.359 [Thread-0] TRACE org.hibernate.service.internal.AbstractServiceRegistryImpl - Initializing service [role=org.hibernate.tool.schema.spi.SchemaManagementTool]
+04:14:32.395 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Normalizing identifier quoting for object name [rentalent]
+04:14:32.397 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Rendering unquoted identifier [rentalent] in lower case for use in DatabaseMetaData
+04:14:32.402 [Thread-0] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@4efb21d3] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+04:14:32.750 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Normalizing identifier quoting for object name [event]
+04:14:32.750 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Rendering unquoted identifier [event] in lower case for use in DatabaseMetaData
+04:14:32.751 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Normalizing identifier quoting for object name [eventID]
+04:14:32.751 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Rendering unquoted identifier [eventID] in lower case for use in DatabaseMetaData
+04:14:32.751 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Normalizing identifier quoting for object name [date]
+04:14:32.751 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Rendering unquoted identifier [date] in lower case for use in DatabaseMetaData
+04:14:32.751 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Normalizing identifier quoting for object name [eventName]
+04:14:32.751 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Rendering unquoted identifier [eventName] in lower case for use in DatabaseMetaData
+04:14:32.751 [Thread-0] DEBUG org.hibernate.mapping.Table - No alter strings for table : event
+04:14:32.751 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Normalizing identifier quoting for object name [event]
+04:14:32.752 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Rendering unquoted identifier [event] in lower case for use in DatabaseMetaData
+04:14:32.754 [Thread-0] TRACE org.hibernate.tool.hbm2ddl.UniqueConstraintSchemaUpdateStrategy - Interpreting UniqueConstraintSchemaUpdateStrategy from setting : null
+04:14:32.754 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Normalizing identifier quoting for object name [event]
+04:14:32.755 [Thread-0] TRACE org.hibernate.engine.jdbc.env.internal.NormalizingIdentifierHelperImpl - Rendering unquoted identifier [event] in lower case for use in DatabaseMetaData
+04:14:32.766 [Thread-0] DEBUG org.hibernate.query.spi.NamedQueryRepository - Checking 0 named HQL queries
+04:14:32.766 [Thread-0] DEBUG org.hibernate.query.spi.NamedQueryRepository - Checking 0 named SQL queries
+04:14:32.779 [Thread-0] TRACE org.hibernate.type.spi.TypeConfiguration$Scope - Handling #sessionFactoryCreated from [org.hibernate.internal.SessionFactoryImpl@5aec871c] for TypeConfiguration
+04:14:32.784 [Thread-0] DEBUG org.hibernate.internal.SessionFactoryRegistry - Initializing SessionFactoryRegistry : org.hibernate.internal.SessionFactoryRegistry@7f4fe9dc
+04:14:32.784 [Thread-0] TRACE org.hibernate.service.internal.AbstractServiceRegistryImpl - Initializing service [role=org.hibernate.engine.jndi.spi.JndiService]
+04:14:32.788 [Thread-0] DEBUG org.hibernate.internal.SessionFactoryRegistry - Registering SessionFactory: 3af25b08-539c-4b69-9f7f-77de4c68e520 (<unnamed>)
+04:14:32.788 [Thread-0] DEBUG org.hibernate.internal.SessionFactoryRegistry - Not binding SessionFactory to JNDI, no JNDI name configured
+04:14:32.790 [Thread-0] TRACE org.hibernate.internal.SessionFactoryImpl$SessionBuilderImpl - Opening Hibernate Session.  tenant=null
+04:14:32.872 [Thread-0] TRACE org.hibernate.service.internal.AbstractServiceRegistryImpl - Initializing service [role=org.hibernate.stat.spi.StatisticsImplementor]
+04:14:32.879 [Thread-0] DEBUG org.hibernate.stat.internal.StatisticsInitiator - Statistics initialized [enabled=false]
+04:14:32.884 [Thread-0] TRACE org.hibernate.service.internal.AbstractServiceRegistryImpl - Initializing service [role=org.hibernate.jmx.spi.JmxService]
+04:14:32.887 [Thread-0] TRACE org.hibernate.internal.SessionImpl - Opened Session [e9025079-5eaf-487e-aeb1-9d362ea47bce] at timestamp: 1701681272833
+04:14:32.896 [Thread-0] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+04:14:33.054 [Thread-0] TRACE org.hibernate.context.internal.ThreadLocalSessionContext - Allowing invocation [beginTransaction] to proceed to real (non-transacted) session
+04:14:33.057 [Thread-0] TRACE org.hibernate.context.internal.ThreadLocalSessionContext - Allowing proxy invocation [beginTransaction] to proceed to real session
+04:14:33.061 [Thread-0] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - begin
+04:14:33.063 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.AbstractLogicalConnectionImplementor - Preparing to begin transaction via JDBC Connection.setAutoCommit(false)
+04:14:33.069 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.AbstractLogicalConnectionImplementor - Transaction begun via JDBC Connection.setAutoCommit(false)
+04:14:33.073 [Thread-0] TRACE org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl - ResourceLocalTransactionCoordinatorImpl#afterBeginCallback
+04:14:33.075 [Thread-0] TRACE org.hibernate.context.internal.ThreadLocalSessionContext - Allowing proxy invocation [get] to proceed to real session
+04:14:33.094 [Thread-0] TRACE org.hibernate.event.internal.DefaultLoadEventListener - Loading entity: [models.com.Event#100xx]
+04:14:33.094 [Thread-0] TRACE org.hibernate.event.internal.DefaultLoadEventListener - Attempting to resolve: [models.com.Event#100xx]
+04:14:33.098 [Thread-0] TRACE org.hibernate.event.internal.DefaultLoadEventListener - Object not resolved in any cache: [models.com.Event#100xx]
+04:14:33.098 [Thread-0] TRACE org.hibernate.persister.entity.AbstractEntityPersister - Fetching entity: [models.com.Event#100xx]
+04:14:33.105 [Thread-0] DEBUG org.hibernate.SQL - select event0_.eventID as eventid1_0_0_, event0_.date as date2_0_0_, event0_.eventName as eventnam3_0_0_ from event event0_ where event0_.eventID=?
+04:14:33.119 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Registering statement [com.mysql.cj.jdbc.ClientPreparedStatement: select event0_.eventID as eventid1_0_0_, event0_.date as date2_0_0_, event0_.eventName as eventnam3_0_0_ from event event0_ where event0_.eventID=** NOT SPECIFIED **]
+04:14:33.119 [Thread-0] TRACE org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - Registering last query statement [com.mysql.cj.jdbc.ClientPreparedStatement: select event0_.eventID as eventid1_0_0_, event0_.date as date2_0_0_, event0_.eventName as eventnam3_0_0_ from event event0_ where event0_.eventID=** NOT SPECIFIED **]
+04:14:33.130 [Thread-0] TRACE org.hibernate.type.descriptor.sql.BasicBinder - binding parameter [1] as [VARCHAR] - [100xx]
+04:14:33.133 [Thread-0] TRACE org.hibernate.loader.plan.exec.internal.AbstractLoadPlanBasedLoader - Bound [2] parameters total
+04:14:33.139 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Registering result set [com.mysql.cj.jdbc.result.ResultSetImpl@4a5c87bc]
+04:14:33.143 [Thread-0] TRACE org.hibernate.loader.plan.exec.process.internal.ResultSetProcessorImpl - Processing result set
+04:14:33.143 [Thread-0] TRACE org.hibernate.loader.plan.exec.process.internal.ResultSetProcessorImpl - Starting ResultSet row #0
+04:14:33.145 [Thread-0] DEBUG org.hibernate.loader.plan.exec.process.internal.EntityReferenceInitializerImpl - On call to EntityIdentifierReaderImpl#resolve, EntityKey was already known; should only happen on root returns with an optional identifier specified
+04:14:33.145 [Thread-0] TRACE org.hibernate.loader.plan.exec.process.internal.EntityReferenceInitializerImpl - hydrating entity state
+04:14:33.146 [Thread-0] TRACE org.hibernate.loader.plan.exec.process.internal.EntityReferenceInitializerImpl - Initializing object from ResultSet: [models.com.Event#100xx]
+04:14:33.159 [Thread-0] TRACE org.hibernate.persister.entity.AbstractEntityPersister - Hydrating entity: [models.com.Event#100xx]
+04:14:33.164 [Thread-0] TRACE org.hibernate.type.descriptor.sql.BasicExtractor - extracted value ([date2_0_0_] : [DATE]) - [2023-12-12]
+04:14:33.167 [Thread-0] TRACE org.hibernate.type.descriptor.sql.BasicExtractor - extracted value ([eventnam3_0_0_] : [VARCHAR]) - [Xodus]
+04:14:33.172 [Thread-0] TRACE org.hibernate.loader.plan.exec.process.internal.ResultSetProcessorImpl - Done processing result set (1 rows)
+04:14:33.178 [Thread-0] TRACE org.hibernate.loader.plan.exec.process.internal.AbstractRowReader - Total objects hydrated: 1
+04:14:33.183 [Thread-0] DEBUG org.hibernate.engine.internal.TwoPhaseLoad - Resolving attributes for [models.com.Event#100xx]
+04:14:33.185 [Thread-0] DEBUG org.hibernate.engine.internal.TwoPhaseLoad - Processing attribute `date` : value = 2023-12-12
+04:14:33.185 [Thread-0] DEBUG org.hibernate.engine.internal.TwoPhaseLoad - Attribute (`date`)  - enhanced for lazy-loading? - false
+04:14:33.186 [Thread-0] DEBUG org.hibernate.engine.internal.TwoPhaseLoad - Processing attribute `eventName` : value = Xodus
+04:14:33.186 [Thread-0] DEBUG org.hibernate.engine.internal.TwoPhaseLoad - Attribute (`eventName`)  - enhanced for lazy-loading? - false
+04:14:33.188 [Thread-0] DEBUG org.hibernate.engine.internal.TwoPhaseLoad - Done materializing entity [models.com.Event#100xx]
+04:14:33.199 [Thread-0] TRACE org.hibernate.loader.plan.exec.process.internal.ResultSetProcessingContextImpl - Skipping create subselects because there are fewer than 2 results, so query by key is more efficient.
+04:14:33.200 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Releasing statement [com.mysql.cj.jdbc.ClientPreparedStatement: select event0_.eventID as eventid1_0_0_, event0_.date as date2_0_0_, event0_.eventName as eventnam3_0_0_ from event event0_ where event0_.eventID='100xx']
+04:14:33.201 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Closing result set [com.mysql.cj.jdbc.result.ResultSetImpl@4a5c87bc]
+04:14:33.201 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Closing prepared statement [com.mysql.cj.jdbc.ClientPreparedStatement: select event0_.eventID as eventid1_0_0_, event0_.date as date2_0_0_, event0_.eventName as eventnam3_0_0_ from event event0_ where event0_.eventID='100xx']
+04:14:33.202 [Thread-0] TRACE org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - Starting after statement execution processing [AFTER_TRANSACTION]
+04:14:33.202 [Thread-0] TRACE org.hibernate.engine.internal.StatefulPersistenceContext - Initializing non-lazy collections
+04:14:33.202 [Thread-0] DEBUG org.hibernate.loader.entity.plan.AbstractLoadPlanBasedEntityLoader - Done entity load : models.com.Event#100xx
+04:14:33.202 [Thread-0] TRACE org.hibernate.context.internal.ThreadLocalSessionContext - Allowing proxy invocation [delete] to proceed to real session
+04:14:33.205 [Thread-0] TRACE org.hibernate.event.internal.DefaultDeleteEventListener - Deleting a persistent instance
+04:14:33.206 [Thread-0] TRACE org.hibernate.event.internal.DefaultDeleteEventListener - Deleting [models.com.Event#100xx]
+04:14:33.251 [Thread-0] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - committing
+04:14:33.256 [Thread-0] TRACE org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl - ResourceLocalTransactionCoordinatorImpl#beforeCompletionCallback
+04:14:33.257 [Thread-0] TRACE org.hibernate.internal.SessionImpl - SessionImpl#beforeTransactionCompletion()
+04:14:33.257 [Thread-0] TRACE org.hibernate.internal.SessionImpl - Automatically flushing session
+04:14:33.258 [Thread-0] TRACE org.hibernate.event.internal.AbstractFlushingEventListener - Flushing session
+04:14:33.258 [Thread-0] DEBUG org.hibernate.event.internal.AbstractFlushingEventListener - Processing flush-time cascades
+04:14:33.265 [Thread-0] DEBUG org.hibernate.event.internal.AbstractFlushingEventListener - Dirty checking collections
+04:14:33.271 [Thread-0] TRACE org.hibernate.event.internal.AbstractFlushingEventListener - Flushing entities and processing referenced collections
+04:14:33.275 [Thread-0] TRACE org.hibernate.event.internal.AbstractFlushingEventListener - Processing unreferenced collections
+04:14:33.276 [Thread-0] TRACE org.hibernate.event.internal.AbstractFlushingEventListener - Scheduling collection removes/(re)creates/updates
+04:14:33.279 [Thread-0] DEBUG org.hibernate.event.internal.AbstractFlushingEventListener - Flushed: 0 insertions, 0 updates, 1 deletions to 1 objects
+04:14:33.279 [Thread-0] DEBUG org.hibernate.event.internal.AbstractFlushingEventListener - Flushed: 0 (re)creations, 0 updates, 0 removals to 0 collections
+04:14:33.283 [Thread-0] DEBUG org.hibernate.internal.util.EntityPrinter - Listing entities:
+04:14:33.284 [Thread-0] DEBUG org.hibernate.internal.util.EntityPrinter - models.com.Event{date=2023-12-12, eventID=100xx, eventName=Xodus}
+04:14:33.284 [Thread-0] TRACE org.hibernate.event.internal.AbstractFlushingEventListener - Executing flush
+04:14:33.290 [Thread-0] TRACE org.hibernate.persister.entity.AbstractEntityPersister - Deleting entity: [models.com.Event#100xx]
+04:14:33.290 [Thread-0] TRACE org.hibernate.service.internal.AbstractServiceRegistryImpl - Initializing service [role=org.hibernate.engine.jdbc.batch.spi.BatchBuilder]
+04:14:33.298 [Thread-0] TRACE org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - Starting after statement execution processing [AFTER_TRANSACTION]
+04:14:33.299 [Thread-0] DEBUG org.hibernate.SQL - delete from event where eventID=?
+04:14:33.303 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Registering statement [com.mysql.cj.jdbc.ClientPreparedStatement: delete from event where eventID=** NOT SPECIFIED **]
+04:14:33.307 [Thread-0] TRACE org.hibernate.type.descriptor.sql.BasicBinder - binding parameter [1] as [VARCHAR] - [100xx]
+04:14:33.310 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Releasing statement [com.mysql.cj.jdbc.ClientPreparedStatement: delete from event where eventID='100xx']
+04:14:33.311 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Closing prepared statement [com.mysql.cj.jdbc.ClientPreparedStatement: delete from event where eventID='100xx']
+04:14:33.311 [Thread-0] TRACE org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - Starting after statement execution processing [AFTER_TRANSACTION]
+04:14:33.314 [Thread-0] TRACE org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - Starting after statement execution processing [AFTER_TRANSACTION]
+04:14:33.315 [Thread-0] TRACE org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - Starting after statement execution processing [AFTER_TRANSACTION]
+04:14:33.315 [Thread-0] TRACE org.hibernate.event.internal.AbstractFlushingEventListener - Post flush
+04:14:33.324 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.AbstractLogicalConnectionImplementor - LogicalConnection#beforeTransactionCompletion
+04:14:33.325 [Thread-0] TRACE org.hibernate.resource.transaction.internal.SynchronizationRegistryStandardImpl - SynchronizationRegistryStandardImpl.notifySynchronizationsBeforeTransactionCompletion
+04:14:33.326 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.AbstractLogicalConnectionImplementor - Preparing to commit transaction via JDBC Connection.commit()
+04:14:33.331 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.AbstractLogicalConnectionImplementor - Transaction committed via JDBC Connection.commit()
+04:14:33.333 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.AbstractLogicalConnectionImplementor - LogicalConnection#afterTransaction
+04:14:33.333 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Releasing JDBC resources
+04:14:33.333 [Thread-0] TRACE org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - Starting after statement execution processing [AFTER_TRANSACTION]
+04:14:33.334 [Thread-0] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+04:14:33.341 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Releasing JDBC resources
+04:14:33.341 [Thread-0] TRACE org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - Starting after statement execution processing [AFTER_TRANSACTION]
+04:14:33.342 [Thread-0] TRACE org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl - ResourceLocalTransactionCoordinatorImpl#afterCompletionCallback(true)
+04:14:33.342 [Thread-0] TRACE org.hibernate.resource.transaction.internal.SynchronizationRegistryStandardImpl - SynchronizationRegistryStandardImpl.notifySynchronizationsAfterTransactionCompletion(3)
+04:14:33.342 [Thread-0] DEBUG org.hibernate.resource.transaction.internal.SynchronizationRegistryStandardImpl - Clearing local Synchronizations
+04:14:33.342 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.AbstractLogicalConnectionImplementor - LogicalConnection#afterTransaction
+04:14:33.342 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Releasing JDBC resources
+04:14:33.343 [Thread-0] TRACE org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - Starting after statement execution processing [AFTER_TRANSACTION]
+04:14:33.343 [Thread-0] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+04:14:33.343 [Thread-0] TRACE org.hibernate.internal.SessionImpl - SessionImpl#afterTransactionCompletion(successful=true, delayed=false)
+04:14:33.343 [Thread-0] TRACE org.hibernate.internal.SessionImpl - Automatically closing session
+04:14:33.343 [Thread-0] TRACE org.hibernate.internal.SessionImpl - Closing session [e9025079-5eaf-487e-aeb1-9d362ea47bce]
+04:14:33.343 [Thread-0] TRACE org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - Closing JDBC container [org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl@55046213]
+04:14:33.343 [Thread-0] DEBUG org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - HHH000420: Closing un-released batch
+04:14:33.343 [Thread-0] TRACE org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - Starting after statement execution processing [AFTER_TRANSACTION]
+04:14:33.343 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Releasing JDBC resources
+04:14:33.343 [Thread-0] TRACE org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl - Starting after statement execution processing [AFTER_TRANSACTION]
+04:14:33.344 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Closing logical connection
+04:14:33.344 [Thread-0] TRACE org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Logical connection closed
+04:14:33.344 [Thread-0] TRACE org.hibernate.context.internal.ThreadLocalSessionContext - Allowing invocation [clear] to proceed to real (closed) session
+04:14:33.344 [Thread-0] TRACE org.hibernate.context.internal.ThreadLocalSessionContext - Allowing proxy invocation [clear] to proceed to real session
+04:15:00.893 [Hibernate Connection Pool Validation Thread] DEBUG org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - Connection pool now considered primed; min-size will be maintained
