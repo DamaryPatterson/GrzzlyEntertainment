@@ -1,5 +1,4 @@
 package multiThreadServer;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -41,7 +40,7 @@ public class ClientHandler implements Runnable {
 		this.dbConn = AppServer.getDatabaseConnection();
 
 	}
-	
+
 	private void configureStreams() {
 		try {
 			objOs = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -55,10 +54,11 @@ public class ClientHandler implements Runnable {
 	public void run() {
 		try {
 			configureStreams();
-			String action = "";
+			
 			while (true) {
 				try {
 					if (clientSocket != null) {
+						String action = "";
 						action = (String) objIs.readObject();
 
 						// Handle requests based on the action received from the client
@@ -156,7 +156,6 @@ public class ClientHandler implements Runnable {
 						case "Add Event":
 							// Handling code for adding an event to the database
 							Event event = (Event) objIs.readObject();
-							// addEventToDatabase(event);
 							event.addEvent();
 							objOs.writeObject(true);
 							break;
@@ -263,27 +262,32 @@ public class ClientHandler implements Runnable {
 							break;
 
 						}
+						objOs.writeObject("Action Completed");
+		                objOs.flush(); // Flush the stream to ensure data is sent immediately
+		                logger.info("Action Completed");
 					}
-					logger.info("Gets Data From the client Sucessfully");
+					logger.info("Gets Data From the client Sucessfully"); 
 				} catch (ClassCastException | ClassNotFoundException e) {
 					e.printStackTrace();
 					logger.error("Failed to get Data From The client");
 				}
-
 			}
 		} catch (IOException e) {
+			logger.error("There is an error here that Forces termination");
 			e.printStackTrace();
-		} finally {
-			try {
-				objOs.close();
-				objIs.close();
-				clientSocket.close();
-				logger.info("Closed Objects and socket successfully");
-			} catch (IOException e) {
-				logger.error("Could not Close Objects and socket");
-				e.printStackTrace();
+		}
+		closeConnection();
+	}
 
-			}
+	private void closeConnection() {
+		try {
+			objOs.close();
+			objIs.close();
+			clientSocket.close();
+			logger.info("Closed Objects and socket successfully");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -294,7 +298,6 @@ public class ClientHandler implements Runnable {
 			String sql = "SELECT * FROM rentalent.customer WHERE customerID= ? ";
 			PreparedStatement stmt = dbConn.prepareStatement(sql);
 			stmt.setString(1, custId);
-
 
 			ResultSet rs = stmt.executeQuery();
 
@@ -884,11 +887,11 @@ public class ClientHandler implements Runnable {
 		return eventList;
 	}
 
-	public void deleteEvent() {
+	public void deleteEvent(String eventID) {
 		Event event = new Event();
 		Session session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
-		event = session.get(Event.class, ((Event) event).getEventID());
+		event = session.get(Event.class, eventID);
 		event.setEventName(event.getEventName());
 		transaction.commit();
 		session.clear();

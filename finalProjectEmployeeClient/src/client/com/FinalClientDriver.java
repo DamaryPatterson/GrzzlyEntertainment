@@ -11,7 +11,7 @@ public class FinalClientDriver {
 
 		try {
 			Client client = new Client();
-//			Customer customer = new Customer("11001","JPatterson","0000",2000.0);
+			Customer customer = new Customer("11001","JPatterson","0000",2000.0);
 //			client.sendAction("Add Customer");
 //			System.out.println("Message sent to server");
 //			client.sendCustomer(customer);
@@ -33,6 +33,16 @@ public class FinalClientDriver {
 			System.out.println("ID Sent to server");
 			client.receiveResponse();
 			System.out.println("Response recieved from server");
+			
+			
+			client.sendAction("Delete Event");
+			client.sendEventId("1111");
+			System.out.println("ID Sent to server");
+			client.receiveResponse();
+			System.out.println("Response recieved from server");
+			
+			client.sendAction("Delete Event");
+			System.out.println("Message sent to server");
 		
 			client.closeConnection();
 		} catch (Exception e) {

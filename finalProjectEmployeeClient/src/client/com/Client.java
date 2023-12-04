@@ -367,6 +367,14 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
+	public void sendEventId(String id) {
+		try {
+			objOs.writeObject(id);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	public void sendEquipmentId(String equipmentId) {
 		try {
@@ -529,4 +537,5 @@ public class Client {
 		}
 		
 	}
+	
 }
