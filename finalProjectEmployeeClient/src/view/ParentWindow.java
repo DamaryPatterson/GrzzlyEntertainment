@@ -94,7 +94,7 @@ public class ParentWindow extends JFrame {
         viewEquipmentStockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openInternalFrame(new ViewEquipmentStock(), "View Equipment Stock");
+                openInternalFrame(new ViewInventory(), "View Equipment Stock");
             }
         });
         buttonPanel.add(viewEquipmentStockButton);

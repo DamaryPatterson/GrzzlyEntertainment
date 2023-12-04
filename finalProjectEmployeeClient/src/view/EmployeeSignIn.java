@@ -1,62 +1,75 @@
 package view;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class EmployeeSignIn extends JFrame {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JTextField usernameField;
+import client.com.Client;
+
+import java.awt.event.*;
+
+public class EmployeeSignIn {
+    private JFrame frame;
+    private JTextField idField;
     private JPasswordField passwordField;
+    private Client client= new Client();
 
     public EmployeeSignIn() {
-        setTitle("Employee Sign In");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 150);
-        setLocationRelativeTo(null);
+    	
+        frame = new JFrame("Employee Sign-In");
+        frame.setSize(300, 200);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 2));
+        JLabel idLabel = new JLabel("ID:");
+        idLabel.setBounds(30, 30, 80, 25);
+        frame.add(idLabel);
 
-        JLabel usernameLabel = new JLabel("Username:");
+        idField = new JTextField();
+        idField.setBounds(120, 30, 150, 25);
+        frame.add(idField);
+
         JLabel passwordLabel = new JLabel("Password:");
-        usernameField = new JTextField();
+        passwordLabel.setBounds(30, 70, 80, 25);
+        frame.add(passwordLabel);
+
         passwordField = new JPasswordField();
+        passwordField.setBounds(120, 70, 150, 25);
+        frame.add(passwordField);
 
         JButton signInButton = new JButton("Sign In");
+        signInButton.setBounds(100, 120, 100, 25);
+        frame.add(signInButton);
+
         signInButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                // For demo purposes, just check if fields are not empty
-                if (!username.isEmpty() && passwordField.getPassword().length > 0) {
-                    // Assuming successful sign-in; create and show ParentWindow
-                    new ParentWindow();
-                    //dispose(); // Close sign-in page after successful sign-in
+                String id = idField.getText();
+                String password = new String(passwordField.getPassword());
+                
+                client.sendAction("Find Employee");
+                client.sendLoginDetails(id, password); // Call your method here to send details to server
+                boolean loginResult = client.receiveResponse(); // Modify receiveResponse to return a boolean
+                if (loginResult) {
+                    JOptionPane.showMessageDialog(frame, "Login Successful!");
+                    ParentWindow parentWindow = new ParentWindow();
+                    parentWindow.setVisible(true);
+                    // Add code to navigate to the next screen or perform necessary actions on successful login
                 } else {
-                    JOptionPane.showMessageDialog(null,
-                            "Invalid username or password",
-                            "Sign In Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Login Failed. Please check your credentials.");
                 }
+                clearFields();
             }
         });
 
-        panel.add(usernameLabel);
-        panel.add(usernameField);
-        panel.add(passwordLabel);
-        panel.add(passwordField);
-        panel.add(signInButton);
+        frame.setVisible(true);
+    }
 
-        add(panel);
-        setVisible(true);
+    public void clearFields() {
+    	idField.setText("");
+    	passwordField.setText("");
     }
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new EmployeeSignIn());
+        new EmployeeSignIn();
     }
 }
+

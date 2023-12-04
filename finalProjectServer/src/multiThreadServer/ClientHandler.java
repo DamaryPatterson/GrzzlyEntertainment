@@ -68,6 +68,13 @@ public class ClientHandler implements Runnable {
 							deleteCustomerById(delCustomerId);
 							objOs.writeObject(true);
 							break;
+							
+							
+							
+							
+							
+							
+							
 						case "Add Employee":
 							// Handling code for adding an employee to the database
 							Employee employee = (Employee) objIs.readObject();
@@ -76,8 +83,9 @@ public class ClientHandler implements Runnable {
 							break;
 						case "Find Employee":
 							// Handling code for finding an employee in the database
-							String empId = (String) objIs.readObject();
-							Employee foundEmployee = findEmployeeById(empId);
+							String id = (String) objIs.readObject();
+							String password =(String) objIs.readObject();
+							Employee foundEmployee =findEmployeeByIdAndPassword(id,password);
 							objOs.writeObject(foundEmployee);
 							break;
 						case "Update Employee":
@@ -212,6 +220,9 @@ public class ClientHandler implements Runnable {
 							RentalRequest foundRentalRequest = findRentalRequestById(requestId);
 							objOs.writeObject(foundRentalRequest);
 							break;
+						case "Read All Request":
+							viewAllRequest();
+							break;
 						case "Update RentalRequest":
 							break;
 						case "Delete RentalRequest":
@@ -261,6 +272,8 @@ public class ClientHandler implements Runnable {
 
 		}
 	}
+	
+
 	private void configureStreams() {
 		try {
 			objOs = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -289,7 +302,7 @@ public class ClientHandler implements Runnable {
 
 	private void deleteRentalRequestById(String delRequestId) {
 	    try {
-	        String sql = "DELETE FROM RentalRequest WHERE requestID = '" + delRequestId + "';";
+	        String sql = "DELETE FROM rentalrequest WHERE requestID = '" + delRequestId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        int rowsAffected = stmt.executeUpdate(sql);
 	        if (rowsAffected > 0) {
@@ -304,7 +317,7 @@ public class ClientHandler implements Runnable {
 
 	private void deleteMessageById(String delMessageId) {
 	    try {
-	        String sql = "DELETE FROM Message WHERE messageID = '" + delMessageId + "';";
+	        String sql = "DELETE FROM message WHERE messageID = '" + delMessageId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        int rowsAffected = stmt.executeUpdate(sql);
 	        if (rowsAffected > 0) {
@@ -319,7 +332,7 @@ public class ClientHandler implements Runnable {
 
 	private void deleteEventScheduleById(String delScheduleId) {
 	    try {
-	        String sql = "DELETE FROM EventSchedule WHERE EventscheduleID = '" + delScheduleId + "';";
+	        String sql = "DELETE FROM eventschedule WHERE EventscheduleID = '" + delScheduleId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        int rowsAffected = stmt.executeUpdate(sql);
 	        if (rowsAffected > 0) {
@@ -334,7 +347,7 @@ public class ClientHandler implements Runnable {
 
 	private void deleteEventById(String delEventId) {
 	    try {
-	        String sql = "DELETE FROM Event WHERE eventID = '" + delEventId + "';";
+	        String sql = "DELETE FROM event WHERE eventID = '" + delEventId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        int rowsAffected = stmt.executeUpdate(sql);
 	        if (rowsAffected > 0) {
@@ -349,7 +362,7 @@ public class ClientHandler implements Runnable {
 
 	private void deleteEquipmentStockById(String delEquipStockId) {
 	    try {
-	        String sql = "DELETE FROM Equipmentstock WHERE equipmentID = '" + delEquipStockId + "';";
+	        String sql = "DELETE FROM inventory WHERE equipmentID = '" + delEquipStockId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        int rowsAffected = stmt.executeUpdate(sql);
 	        if (rowsAffected > 0) {
@@ -364,7 +377,7 @@ public class ClientHandler implements Runnable {
 
 	private void deleteEmployeeById(String deleteEmpId) {
 	    try {
-	        String sql = "DELETE FROM Employee WHERE employeeID = '" + deleteEmpId + "';";
+	        String sql = "DELETE FROM employee WHERE employeeID = '" + deleteEmpId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        int rowsAffected = stmt.executeUpdate(sql);
 	        if (rowsAffected > 0) {
@@ -379,7 +392,7 @@ public class ClientHandler implements Runnable {
 
 	private void deleteEquipmentById(String deleteEquipId) {
 	    try {
-	        String sql = "DELETE FROM Equipment WHERE equipmentID = '" + deleteEquipId + "';";
+	        String sql = "DELETE FROM equipment WHERE equipmentID = '" + deleteEquipId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        int rowsAffected = stmt.executeUpdate(sql);
 	        if (rowsAffected > 0) {
@@ -412,11 +425,38 @@ public class ClientHandler implements Runnable {
 	    }
 	    return transaction;
 	}
+	 private List<RentalRequest> viewAllRequest() {
+	        List<RentalRequest> resultList = new ArrayList<>();
+
+	        try {
+	            String sql = "SELECT * FROM rentalent.rentalrequest";
+	            Statement stmt = dbConn.createStatement();
+	            ResultSet rs = stmt.executeQuery(sql);
+
+	            while (rs.next()) {
+	                RentalRequest rentalRequest = new RentalRequest(
+	                        rs.getString("requestID"),
+	                        rs.getString("customerID"),
+	                        rs.getString("equipmentID"),
+	                        rs.getDate("rentalDate"),
+	                        rs.getDouble("quotationCost"),
+	                        rs.getBoolean("rentalStatus")
+	                );
+
+	                resultList.add(rentalRequest);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            // Handle any SQL exception appropriately
+	        }
+
+	        return resultList;
+	    }
 
 	private RentalRequest findRentalRequestById(String requestId) {
 	    RentalRequest rentalRequest = new RentalRequest();
 	    try {
-	        String sql = "SELECT * FROM RentalRequest WHERE requestID = '" + requestId + "';";
+	        String sql = "SELECT * FROM rentalrequest WHERE requestID = '" + requestId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        
@@ -439,7 +479,7 @@ public class ClientHandler implements Runnable {
 	private CustomerMessage findMessageById(String messageId) {
 	    CustomerMessage message = new CustomerMessage();
 	    try {
-	        String sql = "SELECT * FROM Message WHERE messageID = '" + messageId + "';";
+	        String sql = "SELECT * FROM customeressage WHERE messageID = '" + messageId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        
@@ -458,7 +498,7 @@ public class ClientHandler implements Runnable {
 	private EventSchedule findEventScheduleById(String scheduleId) {
 	    EventSchedule eventSchedule = new EventSchedule();
 	    try {
-	        String sql = "SELECT * FROM EventSchedule WHERE EventscheduleID = '" + scheduleId + "';";
+	        String sql = "SELECT * FROM eventSchedule WHERE EventscheduleID = '" + scheduleId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        
@@ -481,7 +521,7 @@ public class ClientHandler implements Runnable {
 	private Event findEventById(String eventId) {
 	    Event event = new Event(); 
 	    try {
-	        String sql = "SELECT * FROM Event WHERE eventID = '" + eventId + "';";
+	        String sql = "SELECT * FROM event WHERE eventID = '" + eventId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        
@@ -525,7 +565,7 @@ public class ClientHandler implements Runnable {
 	private Equipment findEquipmentById(String equipId) {
 	    Equipment equipment = new Equipment();
 	    try {
-	        String sql = "SELECT * FROM Equipment WHERE equipmentID = '" + equipId + "';";
+	        String sql = "SELECT * FROM equipment WHERE equipmentID = '" + equipId + "';";
 	        Statement stmt = dbConn.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        
@@ -545,7 +585,7 @@ public class ClientHandler implements Runnable {
 
 	public boolean authenticateEmployee(String username, String password) {
 	    try {
-	        String sql = "SELECT * FROM Employee WHERE username = ? AND password = ?";
+	        String sql = "SELECT * FROM employee WHERE username = ? AND password = ?";
 	        PreparedStatement pstmt = dbConn.prepareStatement(sql);
 	        pstmt.setString(1, username);
 	        pstmt.setString(2, password);
@@ -559,24 +599,31 @@ public class ClientHandler implements Runnable {
 	    // Return false in case of exceptions or no matching record
 	    return false;
 	}
-	private Employee findEmployeeById(String empId) {
-	    Employee employee = new Employee();
+	private Employee findEmployeeByIdAndPassword(String ID, String password) {
+	    Employee employee = null;
 	    try {
-	        String sql = "SELECT * FROM employee WHERE employeeID = '" + empId + "';";
-	        Statement stmt = dbConn.createStatement();
-	        ResultSet rs = stmt.executeQuery(sql);
+	        String sql = "SELECT * FROM employee WHERE employeeID = ? AND password = ?";
+	        PreparedStatement pstmt = dbConn.prepareStatement(sql);
+	        pstmt.setString(1, ID);
+	        pstmt.setString(2, password);
+	        
+	        ResultSet rs = pstmt.executeQuery();
 	        
 	        if (rs.next()) {
-	            employee.setEmployeeID(rs.getString(1));
-	            employee.setUsername(rs.getString(2));
-	            employee.setPassword(rs.getString(3));
-	            
+	            employee = new Employee();
+	            employee.setEmployeeID(rs.getString("employeeID"));
+	            employee.setUsername(rs.getString("username"));
+	            employee.setPassword(rs.getString("password"));
+	            // Set other employee properties here if needed
 	        }
+	        
+	        pstmt.close();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 	    return employee;
 	}
+
 	private void addEquipmentToDatabase(Equipment equipment) {
 		// TODO Auto-generated method stub
 		String sql = "INSERT into rentalent.equipment(equipmentID,equipmentName,equipmentCategory,isAvailable,price)"
@@ -636,16 +683,19 @@ public class ClientHandler implements Runnable {
 	}
 	// Example for finding a Customer record by ID
 	private Customer findCustomerById(String customerId) {
-		Customer customer = null;
-		String sql = "SELECT * FROM rentalent.customers WHERE customerID='" + customerId + "';";
+		Customer customer = new Customer();
+		String sql = "SELECT * FROM rentalent.customer WHERE customerID='" + customerId + "';";
 		try {
 			Statement stmt = dbConn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
-				// Retrieve customer data and create a Customer object
-
-			}
+	            customer.setCustomerID(rs.getString(1));
+	            customer.setUsername(rs.getString(2));
+	            customer.setPassword(rs.getString(3));
+	            customer.setAccountBalance(rs.getDouble(4));
+	            
+	        }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -654,7 +704,7 @@ public class ClientHandler implements Runnable {
 	// Example for deleting a Customer record by ID
 
 	private void deleteCustomerById(String customerId) {
-		String sql = "DELETE FROM rentalent.customers WHERE customerID='" + customerId + "';";
+		String sql = "DELETE FROM rentalent.customer WHERE customerID='" + customerId + "';";
 		try {
 			Statement stmt = dbConn.createStatement();
 
@@ -686,7 +736,7 @@ public class ClientHandler implements Runnable {
 	}
 
 	private void addRentalRequestToDatabase(RentalRequest rentalRequest) {
-	    String sql = "INSERT INTO rentalent.RentalRequest(requestID, rentalDate, quotationCost, rentalStatus)" +
+	    String sql = "INSERT INTO rentalent.rentalrequest(requestID, rentalDate, quotationCost, rentalStatus)" +
 	            " VALUES('" + rentalRequest.getRequestID() + "','" + rentalRequest.getRentalDate() +
 	            "','" + rentalRequest.getQuotationCost() + "','" + rentalRequest.isRentalStatus() + "');";
 	    try {
@@ -720,7 +770,7 @@ public class ClientHandler implements Runnable {
 	}
 
 	private void addEventScheduleToDatabase(EventSchedule eventSchedule) {
-	    String sql = "INSERT INTO EventSchedule(EventscheduleID)" +
+	    String sql = "INSERT INTO eventschedule(EventscheduleID)" +
 	            " VALUES('" + eventSchedule.getEventScheduleID() + "');";
 	    try {
 	        Statement stmt = dbConn.createStatement();
@@ -737,7 +787,7 @@ public class ClientHandler implements Runnable {
 
 	@SuppressWarnings("unused")
 	private void addEventToDatabase(Event event) {
-	    String sql = "INSERT INTO Event(eventID, eventName, date)" +
+	    String sql = "INSERT INTO event(eventID, eventName, date)" +
 	            " VALUES('" + event.getEventID() + "','" + event.getEventName() +
 	            "','" + event.getEventDate() + "');";
 	    try {
@@ -754,7 +804,7 @@ public class ClientHandler implements Runnable {
 	}
 
 	private void addEquipmentStockToDatabase(Inventory equipmentStock) {
-	    String sql = "INSERT INTO Equipmentstock(equipmentID, quantityAvailable)" +
+	    String sql = "INSERT INTO inventory(equipmentID, quantityAvailable)" +
 	            " VALUES('" + equipmentStock.getEquipmentID() + "','" + equipmentStock.getQuantityAvailable() + "');";
 	    try {
 	        Statement stmt = dbConn.createStatement();

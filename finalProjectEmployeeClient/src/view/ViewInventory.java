@@ -2,7 +2,7 @@ package view;
 
 import javax.swing.*;
 
-public class ViewEquipmentStock extends JInternalFrame {
+public class ViewInventory extends JInternalFrame {
 
     /**
 	 * 
@@ -10,7 +10,7 @@ public class ViewEquipmentStock extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextArea equipmentStockTextArea;
 
-    public ViewEquipmentStock() {
+    public ViewInventory() {
         super("View Equipment Stock", true, true, true, true);
         initializeComponents();
         setupLayout();
@@ -41,7 +41,7 @@ public class ViewEquipmentStock extends JInternalFrame {
         JDesktopPane desktopPane = new JDesktopPane();
         frame.add(desktopPane);
 
-        ViewEquipmentStock internalFrame = new ViewEquipmentStock();
+        ViewInventory internalFrame = new ViewInventory();
         desktopPane.add(internalFrame);
 
         internalFrame.setSize(400, 300);

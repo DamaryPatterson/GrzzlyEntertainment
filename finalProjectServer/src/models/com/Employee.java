@@ -2,6 +2,7 @@ package models.com;
 
 import java.io.Serializable;
 
+
 public class Employee implements Serializable {
     /**
 	 * 
@@ -10,6 +11,7 @@ public class Employee implements Serializable {
 	private String employeeID;
     private String username;
     private String password;
+    
     
     public Employee(Employee emp) {
 		super();
@@ -54,6 +56,8 @@ public class Employee implements Serializable {
 		return "Employee [employeeID=" + employeeID + ", username=" + username + ", password="
 	+ password+ "]";
 	}
+	
+	
 
-    // Other employee-specific attributes, getters, setters, and methods
+    
 }
