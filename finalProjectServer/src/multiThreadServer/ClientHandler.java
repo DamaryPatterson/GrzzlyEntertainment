@@ -1,4 +1,5 @@
 package multiThreadServer;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -54,221 +55,222 @@ public class ClientHandler implements Runnable {
 	public void run() {
 		try {
 			configureStreams();
-			
 			while (true) {
-				
-					if (clientSocket != null) {
-						String action = "";
-						action = (String) objIs.readObject();
+				String action = (String) objIs.readObject();
+				// Handle requests based on the action received from the client
+				if (action == null) {
+	                // If the action received is null, the client has closed the connection
+	                logger.info("Client disconnected.");
+	                break; // Exit the loop and terminate the thread
+	            }
+				switch (action) {
+				case "Add Customer":
+					Customer customer = (Customer) objIs.readObject();
+					addCustomerToDatabase(customer);
+					objOs.writeObject(true);
+					break;
+				case "Customer Login":
+					String customerId = (String) objIs.readObject();
+					String custPassword = (String) objIs.readObject();
+					Customer foundCustomer = findCustomerByIdAndPassword(customerId, custPassword);
+					objOs.writeObject(foundCustomer);
+					break;
+				case "Find Customer":
+					String custId = (String) objIs.readObject();
+					Customer foundCust = findCustomerById(custId);
+					objOs.writeObject(foundCust);
+					break;
+				case "Update Customer":
+					break;
+				case "Delete Customer":
+					String delCustomerId = (String) objIs.readObject();
+					deleteCustomerById(delCustomerId);
+					objOs.writeObject(true);
+					break;
 
-						// Handle requests based on the action received from the client
-						switch (action) {
-						case "Add Customer":
-							Customer customer = (Customer) objIs.readObject();
-							addCustomerToDatabase(customer);
-							objOs.writeObject(true);
-							break;
-						case "Customer Login":
-							String customerId = (String) objIs.readObject();
-							String custPassword = (String) objIs.readObject();
-							Customer foundCustomer = findCustomerByIdAndPassword(customerId, custPassword);
-							objOs.writeObject(foundCustomer);
-							break;
-						case "Find Customer":
-							String custId = (String) objIs.readObject();
-							Customer foundCust = findCustomerById(custId);
-							objOs.writeObject(foundCust);
-							break;
-						case "Update Customer":
-							break;
-						case "Delete Customer":
-							String delCustomerId = (String) objIs.readObject();
-							deleteCustomerById(delCustomerId);
-							objOs.writeObject(true);
-							break;
+				case "Add Employee":
+					// Handling code for adding an employee to the database
+					Employee employee = (Employee) objIs.readObject();
+					addEmployeeToDatabase(employee);
+					objOs.writeObject(true);
+					break;
+				case "Employee Login":
+					// Handling code for finding an employee in the database
+					String id = (String) objIs.readObject();
+					String password = (String) objIs.readObject();
+					Employee foundEmployee = findEmployeeByIdAndPassword(id, password);
+					objOs.writeObject(foundEmployee);
+					break;
+				case "Find Employee":
+					String empId = (String) objIs.readObject();
+					Employee foundEmp = findEmployeeById(empId);
+					objOs.writeObject(foundEmp);
+					break;
+				case "Update Employee":
+				    // Handling code for updating employee information in the database
+				    Employee updatedEmployee = (Employee) objIs.readObject();
+				    updateEmployeeInDatabase(updatedEmployee);
+				    objOs.writeObject(true); // Write confirmation
+				    break;
 
-						case "Add Employee":
-							// Handling code for adding an employee to the database
-							Employee employee = (Employee) objIs.readObject();
-							addEmployeeToDatabase(employee);
-							objOs.writeObject(true);
-							break;
-						case "Employee Login":
-							// Handling code for finding an employee in the database
-							String id = (String) objIs.readObject();
-							String password = (String) objIs.readObject();
-							Employee foundEmployee = findEmployeeByIdAndPassword(id, password);
-							objOs.writeObject(foundEmployee);
-							break;
-						case "Find Employee":
-							String empId = (String) objIs.readObject();
-							Employee foundEmp = findEmployeeById(empId);
-							objOs.writeObject(foundEmp);
-							break;
-						case "Update Employee":
-							break;
-						case "Delete Employee":
-							String delEmpId = (String) objIs.readObject();
-							deleteEmployeeById(delEmpId);
-							objOs.writeObject(true);
-							break;
+				case "Delete Employee":
+					String delEmpId = (String) objIs.readObject();
+					deleteEmployeeById(delEmpId);
+					objOs.writeObject(true);
+					break;
 
-						case "Add Equipment":
-							// Handling code for adding equipment to the database
-							Equipment equipment = (Equipment) objIs.readObject();
-							addEquipmentToDatabase(equipment);
-							objOs.writeObject(true);
-							break;
-						case "Find Equipment":
-							// Handling code for finding equipment in the database
-							String equipId = (String) objIs.readObject();
-							Equipment foundEquipment = findEquipmentById(equipId);
-							objOs.writeObject(foundEquipment);
-							break;
-						case "Update Equipment":
-							break;
-						case "Delete Equipment":
-							String delEquipId = (String) objIs.readObject();
-							deleteEquipmentById(delEquipId);
-							objOs.writeObject(true);
-							break;
+				case "Add Equipment":
+					// Handling code for adding equipment to the database
+					Equipment equipment = (Equipment) objIs.readObject();
+					addEquipmentToDatabase(equipment);
+					objOs.writeObject(true);
+					break;
+				case "Find Equipment":
+					// Handling code for finding equipment in the database
+					String equipId = (String) objIs.readObject();
+					Equipment foundEquipment = findEquipmentById(equipId);
+					objOs.writeObject(foundEquipment);
+					break;
+				case "Update Equipment":
+					break;
+				case "Delete Equipment":
+					String delEquipId = (String) objIs.readObject();
+					deleteEquipmentById(delEquipId);
+					objOs.writeObject(true);
+					break;
 
-						case "Add Inventory":
-							// Handling code for adding equipment stock to the database
-							Inventory equipmentStock = (Inventory) objIs.readObject();
-							addEquipmentStockToDatabase(equipmentStock);
-							objOs.writeObject(true);
-							break;
-						case "Find Inventory":
-							// Handling code for finding equipment stock in the database
-							String equipStockId = (String) objIs.readObject();
-							Inventory foundEquipmentStock = findEquipmentStockById(equipStockId);
-							objOs.writeObject(foundEquipmentStock);
-							break;
-						case "Update Inventory":
-							break;
-						case "Delete Inventory":
-							String delEquipStockId = (String) objIs.readObject();
-							deleteEquipmentStockById(delEquipStockId);
-							objOs.writeObject(true);
-							break;
+				case "Add Inventory":
+					// Handling code for adding equipment stock to the database
+					Inventory equipmentStock = (Inventory) objIs.readObject();
+					addEquipmentStockToDatabase(equipmentStock);
+					objOs.writeObject(true);
+					break;
+				case "Find Inventory":
+					// Handling code for finding equipment stock in the database
+					String equipStockId = (String) objIs.readObject();
+					Inventory foundEquipmentStock = findEquipmentStockById(equipStockId);
+					objOs.writeObject(foundEquipmentStock);
+					break;
+				case "Update Inventory":
+					break;
+				case "Delete Inventory":
+					String delEquipStockId = (String) objIs.readObject();
+					deleteEquipmentStockById(delEquipStockId);
+					objOs.writeObject(true);
+					break;
 
-						case "Add Event":
-							// Handling code for adding an event to the database
-							Event event = (Event) objIs.readObject();
-							event.addEvent();
-							objOs.writeObject(true);
-							break;
-						case "Find Event":
-							// Handling code for finding an event in the database
-							String eventId = (String) objIs.readObject();
-							Event foundEvent = findEventById(eventId);
-							objOs.writeObject(foundEvent);
-							break;
-						case "Update Event":
-							break;
-						case "Delete Event":
-							String delEventId = (String) objIs.readObject();
-							deleteEvent(delEventId);
-							objOs.writeObject(true);
-							break;
+				case "Add Event":
+					// Handling code for adding an event to the database
+					Event event = (Event) objIs.readObject();
+					event.addEvent();
+					objOs.writeObject(true);
+					break;
+				case "Find Event":
+					// Handling code for finding an event in the database
+					String eventId = (String) objIs.readObject();
+					Event foundEvent = findEventById(eventId);
+					objOs.writeObject(foundEvent);
+					break;
+				case "Update Event":
+					break;
+				case "Delete Event":
+					String delEventId = (String) objIs.readObject();
+					deleteEvent(delEventId);
+					objOs.writeObject(true);
+					break;
 
-						case "Add EventSchedule":
-							// Handling code for adding an event schedule to the database
-							EventSchedule eventSchedule = (EventSchedule) objIs.readObject();
-							addEventScheduleToDatabase(eventSchedule);
-							objOs.writeObject(true);
-							break;
-						case "Find EventSchedule":
-							// Handling code for finding an event schedule in the database
-							String scheduleId = (String) objIs.readObject();
-							EventSchedule foundSchedule = findEventScheduleById(scheduleId);
-							objOs.writeObject(foundSchedule);
-							break;
-						case "Update EventSchedule":
-							break;
-						case "Delete EventSchedule":
-							String delScheduleId = (String) objIs.readObject();
-							deleteEventScheduleById(delScheduleId);
-							objOs.writeObject(true);
-							break;
+				case "Add EventSchedule":
+					// Handling code for adding an event schedule to the database
+					EventSchedule eventSchedule = (EventSchedule) objIs.readObject();
+					addEventScheduleToDatabase(eventSchedule);
+					objOs.writeObject(true);
+					break;
+				case "Find EventSchedule":
+					// Handling code for finding an event schedule in the database
+					String scheduleId = (String) objIs.readObject();
+					EventSchedule foundSchedule = findEventScheduleById(scheduleId);
+					objOs.writeObject(foundSchedule);
+					break;
+				case "Update EventSchedule":
+					break;
+				case "Delete EventSchedule":
+					String delScheduleId = (String) objIs.readObject();
+					deleteEventScheduleById(delScheduleId);
+					objOs.writeObject(true);
+					break;
 
-						case "Add CustomerMessage":
-							// Handling code for adding a message to the database
-							CustomerMessage message = (CustomerMessage) objIs.readObject();
-							addMessageToDatabase(message);
-							objOs.writeObject(true);
-							break;
-						case "Find CustomerMessage":
-							// Handling code for finding a message in the database
-							String messageId = (String) objIs.readObject();
-							CustomerMessage foundMessage = findMessageById(messageId);
-							objOs.writeObject(foundMessage);
-							break;
-						case "Update CustomerMessage":
-							break;
-						case "Delete CustomerMessage":
-							String delMessageId = (String) objIs.readObject();
-							deleteMessageById(delMessageId);
-							objOs.writeObject(true);
-							break;
+				case "Add CustomerMessage":
+					// Handling code for adding a message to the database
+					CustomerMessage message = (CustomerMessage) objIs.readObject();
+					addMessageToDatabase(message);
+					objOs.writeObject(true);
+					break;
+				case "Find CustomerMessage":
+					// Handling code for finding a message in the database
+					String messageId = (String) objIs.readObject();
+					CustomerMessage foundMessage = findMessageById(messageId);
+					objOs.writeObject(foundMessage);
+					break;
+				case "Update CustomerMessage":
+					break;
+				case "Delete CustomerMessage":
+					String delMessageId = (String) objIs.readObject();
+					deleteMessageById(delMessageId);
+					objOs.writeObject(true);
+					break;
 
-						case "Add RentalRequest":
-							// Handling code for adding a rental request to the database
-							RentalRequest rentalRequest = (RentalRequest) objIs.readObject();
-							addRentalRequestToDatabase(rentalRequest);
-							objOs.writeObject(true);
-							break;
-						case "Find RentalRequest":
-							// Handling code for finding a rental request in the database
-							String requestId = (String) objIs.readObject();
-							RentalRequest foundRentalRequest = findRentalRequestById(requestId);
-							objOs.writeObject(foundRentalRequest);
-							break;
-						case "Read All Request":
-							viewAllRequest();
-							break;
-						case "Update RentalRequest":
-							break;
-						case "Delete RentalRequest":
-							String delRequestId = (String) objIs.readObject();
-							deleteRentalRequestById(delRequestId);
-							objOs.writeObject(true);
-							break;
+				case "Add RentalRequest":
+					// Handling code for adding a rental request to the database
+					RentalRequest rentalRequest = (RentalRequest) objIs.readObject();
+					addRentalRequestToDatabase(rentalRequest);
+					objOs.writeObject(true);
+					break;
+				case "Find RentalRequest":
+					// Handling code for finding a rental request in the database
+					String requestId = (String) objIs.readObject();
+					RentalRequest foundRentalRequest = findRentalRequestById(requestId);
+					objOs.writeObject(foundRentalRequest);
+					break;
+				case "Read All Request":
+					viewAllRequest();
+					break;
+				case "Update RentalRequest":
+					break;
+				case "Delete RentalRequest":
+					String delRequestId = (String) objIs.readObject();
+					deleteRentalRequestById(delRequestId);
+					objOs.writeObject(true);
+					break;
 
-						case "AddTransaction":
-							// Handling code for adding a transaction to the database
-							Transaction1 transaction = (Transaction1) objIs.readObject();
-							addTransactionToDatabase(transaction);
-							objOs.writeObject(true);
-							break;
-						case "FindTransaction":
-							// Handling code for finding a transaction in the database
-							String transactionId = (String) objIs.readObject();
-							Transaction1 foundTransaction = findTransactionById(transactionId);
-							objOs.writeObject(foundTransaction);
-							break;
-						case "Update Transaction":
-							break;
-						case "DeleteTransaction":
-							String delTransactionId = (String) objIs.readObject();
-							deleteTransactionById(delTransactionId);
-							objOs.writeObject(true);
-							break;
+				case "AddTransaction":
+					// Handling code for adding a transaction to the database
+					Transaction1 transaction = (Transaction1) objIs.readObject();
+					addTransactionToDatabase(transaction);
+					objOs.writeObject(true);
+					break;
+				case "FindTransaction":
+					// Handling code for finding a transaction in the database
+					String transactionId = (String) objIs.readObject();
+					Transaction1 foundTransaction = findTransactionById(transactionId);
+					objOs.writeObject(foundTransaction);
+					break;
+				case "Update Transaction":
+					break;
+				case "DeleteTransaction":
+					String delTransactionId = (String) objIs.readObject();
+					deleteTransactionById(delTransactionId);
+					objOs.writeObject(true);
+					break;
 
-						default:
-							System.out.println("\nUnrecognized action");
-							logger.warn("Unrecognized Action");
-							break;
+				default:
+					System.out.println("\nUnrecognized action");
+					logger.warn("Unrecognized Action");
+					break;
 
-						}
-						objOs.writeObject("Action Completed");
-		                objOs.flush(); // Flush the stream to ensure data is sent immediately
-		                logger.info("Action Completed");
-		                logger.info("Gets Data From the client Sucessfully");
-					}
+				}
+				closeConnection();
 			}
-					 
+			
 		} catch (IOException e) {
 			logger.error("There is an error here that Forces termination");
 			e.printStackTrace();
@@ -276,12 +278,41 @@ public class ClientHandler implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		closeConnection();
+		
+	}
+
+	private void updateEmployeeInDatabase(Employee updatedEmployee) {
+		String employeeId = updatedEmployee.getEmployeeID(); // Assuming there's a method like getId() in Employee class
+
+	    // Perform the update in the database based on the retrieved employee ID
+	    // Example using SQL queries (pseudo-code)
+	    String updateQuery = "UPDATE employee SET username = ?, password = ? WHERE employeeID = ?";
+	    try {
+	        PreparedStatement statement = dbConn.prepareStatement(updateQuery);
+	        // Set the updated values in the prepared statement
+	        statement.setString(1, updatedEmployee.getUsername());
+	        statement.setString(2, updatedEmployee.getPassword());  
+	        // Execute the update query
+	        statement.setString(3, employeeId);
+	        int rowsUpdated = statement.executeUpdate();
+
+	        // Check if the update was successful
+	        if (rowsUpdated > 0) {
+	            System.out.println("Employee updated successfully!");
+	        } else {
+	            System.out.println("Employee update failed or no matching record found.");
+	        }
+
+	        // Close resources (statement, connection, etc.) if needed
+	        statement.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace(); // Handle exceptions appropriately
+	    }
+		
 	}
 
 	private void closeConnection() {
 		try {
-			objOs.close();
 			objIs.close();
 			clientSocket.close();
 			logger.info("Closed Objects and socket successfully");
@@ -374,6 +405,7 @@ public class ClientHandler implements Runnable {
 			e.printStackTrace();
 		}
 	}
+
 	private void deleteEquipmentStockById(String delEquipStockId) {
 		try {
 			String sql = "DELETE FROM inventory WHERE equipmentID = '" + delEquipStockId + "';";
@@ -872,30 +904,30 @@ public class ClientHandler implements Runnable {
 	}
 
 	public void deleteEvent(String eventID) {
-	    Session session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
-	    Transaction transaction = null;
-	    
-	    try {
-	        transaction = session.beginTransaction();
-	        Event event = session.get(Event.class, eventID);
-	        if (event != null) {
-	            session.delete(event);
-	            transaction.commit();
-	            logger.info("Deleted Event using Hibernate");
-	        } else {
-	            System.out.println("Event with ID " + eventID + " not found.");
-	            
-	        }
-	    } catch (Exception e) {
-	        if (transaction != null) {
-	            transaction.rollback();
-	        }
-	        e.printStackTrace();
-	    } finally {
-	    	if (session != null && session.isOpen()) {
-	            session.close();
-	        }
-	    }
+		Session session = SessionFactoryBuilder.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
+
+		try {
+			transaction = session.beginTransaction();
+			Event event = session.get(Event.class, eventID);
+			if (event != null) {
+				session.delete(event);
+				transaction.commit();
+				logger.info("Deleted Event using Hibernate");
+			} else {
+				System.out.println("Event with ID " + eventID + " not found.");
+
+			}
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close();
+			}
+		}
 	}
 
 }

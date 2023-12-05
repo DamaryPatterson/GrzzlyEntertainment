@@ -35,12 +35,12 @@ public class FinalClientDriver {
 			System.out.println("Response recieved from server");
 			
 			
-			client.sendAction("Delete Event");
-			System.out.println("Message sent to server");
-			client.sendEventId("100xx");
-			System.out.println("ID Sent to server");
-			client.receiveResponse();
-			System.out.println("Response recieved from server");
+//			client.sendAction("Delete Event");
+//			System.out.println("Message sent to server");
+//			client.sendEventId("100xx");
+//			System.out.println("ID Sent to server");
+//			client.receiveResponse();
+//			System.out.println("Response recieved from server");
 		
 			
 		
