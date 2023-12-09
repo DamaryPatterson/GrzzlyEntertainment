@@ -38,10 +38,10 @@ public class EventSchedule implements Serializable {
 	public void setEmployeeID(String id) {
 		this.employeeID = id;
 	}
-	public String getEquipment() {
+	public String getEquipmentID() {
 		return equipmentID;
 	}
-	public void setEquipment(String equipmentID) {
+	public void setEquipmentID(String equipmentID) {
 		this.equipmentID = equipmentID;
 	}
 	public Date getEventDate() {

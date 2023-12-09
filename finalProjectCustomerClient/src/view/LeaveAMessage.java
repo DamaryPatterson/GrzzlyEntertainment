@@ -1,76 +1,84 @@
 package view;
-
 import javax.swing.*;
+
+import client.Client;
+import models.com.CustomerMessage;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LeaveAMessage extends JInternalFrame {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JTextArea messageTextArea;
-    private JButton submitButton;
+public class LeaveAMessage {
+    private JFrame frame;
+    private JTextField messageIdField, customerIdField, messageField;
+    private Client client= new Client();
+    private CustomerMessage message= new CustomerMessage();
 
     public LeaveAMessage() {
-        initializeComponents();
-        setLayout();
-        addComponents();
-        setWindowProperties();
-        addSubmitListener();
+        initialize();
     }
 
-    private void initializeComponents() {
-        messageTextArea = new JTextArea(10, 20);
-        submitButton = new JButton("Submit");
-    }
+    private void initialize() {
+        frame = new JFrame("Message Sender");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLayout(new BorderLayout());
 
-    private void setLayout() {
-        setLayout(new BorderLayout());
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 5, 5));
+        JLabel lblMessageId = new JLabel("Message ID:");
+        JLabel lblCustomerId = new JLabel("Customer ID:");
+        JLabel lblMessage = new JLabel("Message:");
 
-        JLabel titleLabel = new JLabel("Leave a Message");
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        messageIdField = new JTextField();
+        customerIdField = new JTextField();
+        messageField = new JTextField();
 
-        JPanel inputPanel = new JPanel(new BorderLayout());
-        inputPanel.add(new JScrollPane(messageTextArea), BorderLayout.CENTER);
+        inputPanel.add(lblMessageId);
+        inputPanel.add(messageIdField);
+        inputPanel.add(lblCustomerId);
+        inputPanel.add(customerIdField);
+        inputPanel.add(lblMessage);
+        inputPanel.add(messageField);
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(submitButton);
-
-        panel.add(titleLabel, BorderLayout.NORTH);
-        panel.add(inputPanel, BorderLayout.CENTER);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
-
-        add(panel);
-    }
-
-    private void addComponents() {
-        // Add action listener for submit button if needed
-    }
-
-    private void setWindowProperties() {
-        setTitle("Leave a Message");
-        setClosable(true);
-        setResizable(true);
-        setSize(400, 300);
-        setVisible(true);
-    }
-
-    private void addSubmitListener() {
-        submitButton.addActionListener(new ActionListener() {
-            @Override
+        JButton sendButton = new JButton("Send");
+        sendButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Logic to handle the submitted message
-                String message = messageTextArea.getText();
-                JOptionPane.showMessageDialog(LeaveAMessage.this,
-                        "Message Submitted:\n" + message,
-                        "Message Submitted", JOptionPane.INFORMATION_MESSAGE);
-                dispose(); // Close the internal frame after submission
+                sendMessageToServer();
+            }
+        });
+
+        frame.add(inputPanel, BorderLayout.CENTER);
+        frame.add(sendButton, BorderLayout.SOUTH);
+        frame.setVisible(true);
+    }
+
+    private void sendMessageToServer() {
+        message.setMessageID(messageIdField.getText());
+        message.setCustomerID(customerIdField.getText());
+        message.setMessageContent(messageField.getText());
+        message.setEmployeeResponse("");
+
+
+        // Assuming 'client' is your client instance
+        client.sendAction("Add CustomerMessage");
+        System.out.println("Message sent to server");
+        client.sendMessage(message);
+        System.out.println("Record sent to server");
+        client.receiveResponse();
+
+        // Clear fields after sending
+        messageIdField.setText("");
+        customerIdField.setText("");
+        messageField.setText("");
+    }
+
+    // Replace 'client' with your actual client class or instance
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new LeaveAMessage();
             }
         });
     }

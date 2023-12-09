@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ import models.com.Transaction1;
 
 public class ClientHandler implements Runnable {
 	private static Logger logger = LogManager.getLogger(ClientHandler.class.getName());
-	private Socket clientSocket;
+	private Socket clientSocket=null;
 	private ObjectInputStream objIs;
 	private ObjectOutputStream objOs;
 	private Connection dbConn;
@@ -48,13 +49,15 @@ public class ClientHandler implements Runnable {
 			objIs = new ObjectInputStream(clientSocket.getInputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
+			logger.error("Experiencing some configuration error");
 		}
 	}
 
 	@Override
 	public void run() {
 		try {
-			configureStreams();
+			this.configureStreams();
+			
 			while (true) {
 				String action = (String) objIs.readObject();
 				// Handle requests based on the action received from the client
@@ -212,6 +215,10 @@ public class ClientHandler implements Runnable {
 					objOs.writeObject(foundMessage);
 					break;
 				case "Update CustomerMessage":
+					String updateMessageId = (String) objIs.readObject();
+					String response = (String) objIs.readObject();
+					updateMessage(updateMessageId,response);
+					//objOs.writeObject(true); // Write confirmation
 					break;
 				case "Delete CustomerMessage":
 					String delMessageId = (String) objIs.readObject();
@@ -242,7 +249,7 @@ public class ClientHandler implements Runnable {
 					objOs.writeObject(true);
 					break;
 
-				case "AddTransaction":
+				case "Add Transaction":
 					// Handling code for adding a transaction to the database
 					Transaction1 transaction = (Transaction1) objIs.readObject();
 					addTransactionToDatabase(transaction);
@@ -565,7 +572,7 @@ public class ClientHandler implements Runnable {
 				eventSchedule.setEventScheduleID(rs.getString(1));
 				eventSchedule.setEventID(rs.getString(2));
 				eventSchedule.setEmployeeID(rs.getString(3));
-				eventSchedule.setEquipment(rs.getString(4));
+				eventSchedule.setEquipmentID(rs.getString(4));
 				eventSchedule.setEventDate(rs.getString(5));
 				// Retrieve other fields as needed from the ResultSet
 				// Create an EventSchedule object with retrieved data
@@ -765,25 +772,38 @@ public class ClientHandler implements Runnable {
 	}
 
 	private void addTransactionToDatabase(Transaction1 transaction) {
-		String sql = "INSERT INTO rentalent.transaction(transactionID, transactionDate, amountPaid)" + " VALUES('"
-				+ transaction.getTransactionID() + "','" + transaction.getTransactionDate() + "','"
-				+ transaction.getAmountPaid() + "');";
-		try {
-			Statement stmt = dbConn.createStatement();
-
-			if ((stmt.executeUpdate(sql) == 1)) {
-				objOs.writeObject(true);
-			} else {
-				objOs.writeObject(false);
-			}
-		} catch (SQLException | IOException e) {
-			e.printStackTrace();
-		}
+	    String sql = "INSERT INTO rentalent.transaction(transactionID, customerID, requestID, transactionDate, amountPaid) VALUES (?, ?, ?, ?, ?)";
+	    
+	    try {
+	        PreparedStatement pstmt = dbConn.prepareStatement(sql);
+	        
+	        pstmt.setString(1, transaction.getTransactionID());
+	        pstmt.setString(2, transaction.getCustomerID());
+	        pstmt.setString(3, transaction.getRequestID());
+	        
+	        // Convert Date to a format compatible with your database before insertion
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        String formattedDate = dateFormat.format(transaction.getTransactionDate());
+	        pstmt.setString(4, formattedDate);
+	        
+	        pstmt.setDouble(5, transaction.getAmountPaid());
+	        
+	        if (pstmt.executeUpdate() == 1) {
+	            objOs.writeObject(true);
+	        } else {
+	            objOs.writeObject(false);
+	        }
+	    } catch (SQLException | IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 
+
 	private void addRentalRequestToDatabase(RentalRequest rentalRequest) {
-		String sql = "INSERT INTO rentalent.rentalrequest(requestID, rentalDate, quotationCost, rentalStatus)"
-				+ " VALUES('" + rentalRequest.getRequestID() + "','" + rentalRequest.getRentalDate() + "','"
+		String sql = "INSERT INTO rentalent.rentalrequest(requestID, customerID, equipmentID rentalDate, quotationCost, rentalStatus)"
+				+ " VALUES('" + rentalRequest.getRequestID() + "','" +rentalRequest.getCustomerID() + "','" 
+				+ "','" +rentalRequest.getEquipmentID()+rentalRequest.getRentalDate() + "','"
+				
 				+ rentalRequest.getQuotationCost() + "','" + rentalRequest.isRentalStatus() + "');";
 		try {
 			Statement stmt = dbConn.createStatement();
@@ -814,22 +834,60 @@ public class ClientHandler implements Runnable {
 			e.printStackTrace();
 		}
 	}
+	private void updateMessage(String messageId, String response) {
+	    // Perform the update in the database based on the retrieved employee ID
+	    // Example using SQL queries (pseudo-code)
+		CustomerMessage message = new CustomerMessage();
+		message.setEmployeeResponse(response);
+	    String updateQuery = "UPDATE customermessage SET employeeResponse = ? WHERE messageID = ?";
+	    try {
+	        PreparedStatement statement = dbConn.prepareStatement(updateQuery);
+	        // Set the updated values in the prepared statement
+	        statement.setString(1, message.getEmployeeResponse()); 
+	        // Execute the update query
+	        statement.setString(2, messageId);
+	        int rowsUpdated = statement.executeUpdate();
+
+	        // Check if the update was successful
+	        if (rowsUpdated > 0) {
+	            System.out.println("Employee updated successfully!");
+	        } else {
+	            System.out.println("Employee update failed or no matching record found.");
+	        }
+
+	        // Close resources (statement, connection, etc.) if needed
+	        statement.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace(); // Handle exceptions appropriately
+	    }
+	}
 
 	private void addEventScheduleToDatabase(EventSchedule eventSchedule) {
-		String sql = "INSERT INTO eventschedule(EventscheduleID)" + " VALUES('" + eventSchedule.getEventScheduleID()
-				+ "');";
-		try {
-			Statement stmt = dbConn.createStatement();
-
-			if ((stmt.executeUpdate(sql) == 1)) {
-				objOs.writeObject(true);
-			} else {
-				objOs.writeObject(false);
-			}
-		} catch (SQLException | IOException e) {
-			e.printStackTrace();
-		}
+	    String sql = "INSERT INTO eventschedule(eventScheduleID, eventID, employeeID, equipmentID, eventDate) VALUES (?, ?, ?, ?, ?)";
+	    
+	    try {
+	        PreparedStatement pstmt = dbConn.prepareStatement(sql);
+	        
+	        pstmt.setString(1, eventSchedule.getEventScheduleID());
+	        pstmt.setString(2, eventSchedule.getEventID()); // Assuming there are getters for other fields
+	        pstmt.setString(3, eventSchedule.getEmployeeID());
+	        pstmt.setString(4, eventSchedule.getEquipmentID());
+	        
+	        // Convert Date to a format compatible with your database before insertion
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        String formattedDate = dateFormat.format(eventSchedule.getEventDate());
+	        pstmt.setString(5, formattedDate);
+	        
+	        if (pstmt.executeUpdate() == 1) {
+	            objOs.writeObject(true);
+	        } else {
+	            objOs.writeObject(false);
+	        }
+	    } catch (SQLException | IOException e) {
+	        e.printStackTrace();
+	    }
 	}
+
 
 	@SuppressWarnings("unused")
 	private void addEventToDatabase(Event event) {

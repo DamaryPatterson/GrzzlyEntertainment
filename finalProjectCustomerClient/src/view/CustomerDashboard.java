@@ -65,9 +65,7 @@ public class CustomerDashboard extends JFrame {
         leaveMessageMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                LeaveAMessage leaveAMessage = new LeaveAMessage();
-                desktopPane.add(leaveAMessage);
-                leaveAMessage.setVisible(true);
+               new LeaveAMessage();
             }
         });
         menuLeaveMessage.add(leaveMessageMenuItem);

@@ -12,9 +12,23 @@ public class CustomerMessage implements Serializable {
 	private String messageID;
 	private String customerID;
 	private String messageContent;
-	private String EmployeeResponse;
+	private String employeeResponse;
 	
 	
+	public CustomerMessage(String messageID, String customerID, String messageContent, String employeeResponse) {
+		super();
+		this.messageID = messageID;
+		this.customerID = customerID;
+		this.messageContent = messageContent;
+		this.employeeResponse = employeeResponse;
+	}
+	public CustomerMessage() {
+		messageID="";
+		customerID="";
+		messageContent= "";
+		employeeResponse="";
+		
+	}
 	public String getMessageID() {
 		return messageID;
 	}
@@ -34,15 +48,15 @@ public class CustomerMessage implements Serializable {
 		this.messageContent = messageContent;
 	}
 	public String getEmployeeResponse() {
-		return EmployeeResponse;
+		return employeeResponse;
 	}
 	public void setEmployeeResponse(String employeeResponse) {
-		EmployeeResponse = employeeResponse;
+		this.employeeResponse = employeeResponse;
 	}
 	@Override
 	public String toString() {
 		return "CustomerMessage [messageID=" + messageID + ", customerID=" + customerID + ", messageContent="
-				+ messageContent + ", EmployeeResponse=" + EmployeeResponse + "]";
+				+ messageContent + ", EmployeeResponse=" + employeeResponse + "]";
 	}
 }
 

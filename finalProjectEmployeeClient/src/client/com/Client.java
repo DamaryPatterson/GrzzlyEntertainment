@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import models.com.*;
 
 public class Client {
-
+	//Do the coding for update employee, and update message
 	private static Logger logger = LogManager.getLogger(Client.class.getName());
 	private Socket connectionSocket;
 	private ObjectOutputStream objOs;
@@ -148,7 +148,11 @@ public class Client {
 				}
 			}
 			if(action.equalsIgnoreCase("Update CustomerMessage")) {
-				
+//				flag = (Boolean) objIs.readObject();
+//				if(flag==true) {
+//					JOptionPane.showMessageDialog(null,"Message Updated Successfully","Status",
+//							JOptionPane.INFORMATION_MESSAGE);
+//				}
 			}
 			if(action.equalsIgnoreCase("Delete CustomerMessage")) {
 				
@@ -178,10 +182,7 @@ public class Client {
 				
 			}
 			
-			
-			
-			
-			
+
 			if(action.equalsIgnoreCase("Add Rental Request")) {
 				flag = (Boolean) objIs.readObject();
 				if (flag) {
@@ -329,6 +330,23 @@ public class Client {
 	public void sendMessage(CustomerMessage message) {
 		try {
 			objOs.writeObject(message);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendEventSchedule(EventSchedule eventSchedule ) {
+		try {
+			objOs.writeObject(eventSchedule);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendMessageUpdate(String id,String response) {
+		try {
+			objOs.writeObject(id);
+			objOs.writeObject(response);
 		}catch(IOException e) {
 			e.printStackTrace();
 		}

@@ -47,3 +47,15 @@
 16:39:24.083 [main] INFO  client.com.Client - Getting Responses Succesfully
 16:40:49.673 [main] INFO  client.com.Client - Getting Responses Succesfully
 17:02:16.047 [main] INFO  client.com.Client - Client Started Successfully
+13:15:18.874 [main] ERROR client.com.Client - There is a Input/Output error
+13:22:07.685 [main] INFO  client.com.Client - Getting Responses Succesfully
+13:42:22.793 [main] INFO  client.com.Client - Getting Responses Succesfully
+13:44:51.284 [main] INFO  client.com.Client - Getting Responses Succesfully
+13:46:10.239 [main] INFO  client.com.Client - Getting Responses Succesfully
+13:54:04.697 [main] INFO  client.com.Client - Getting Responses Succesfully
+23:25:58.533 [AWT-EventQueue-0] INFO  client.com.Client - Getting Responses Succesfully
+19:15:49.963 [main] ERROR client.com.Client - There is a Input/Output error
+19:18:27.394 [main] INFO  client.com.Client - Getting Responses Succesfully
+19:25:18.995 [main] INFO  client.com.Client - Getting Responses Succesfully
+19:34:31.369 [main] INFO  client.com.Client - Getting Responses Succesfully
+19:40:42.645 [main] INFO  client.com.Client - Getting Responses Succesfully
