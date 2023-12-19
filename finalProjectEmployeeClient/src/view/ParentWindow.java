@@ -1,6 +1,9 @@
 package view;
 
 import javax.swing.*;
+
+import client.com.Client;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +16,7 @@ public class ParentWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JDesktopPane desktopPane;
+	private Client client= new Client();
 
     public ParentWindow() {
         setTitle("Parent Window");
@@ -85,7 +89,7 @@ public class ParentWindow extends JFrame {
         addEquipmentToEventButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openInternalFrame(new ScheduleEquipmentForEvent(), "Add Equipment to Event");
+                openInternalFrame(new EventScheduleFrame(client), "Add Equipment to Event");
             }
         });
         buttonPanel.add(addEquipmentToEventButton);

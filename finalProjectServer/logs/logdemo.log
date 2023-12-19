@@ -81,3 +81,16 @@
 20:08:56.144 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
 20:31:26.894 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
 20:31:40.788 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+14:48:41.905 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+14:48:58.672 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+14:52:08.470 [Thread-1] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+14:54:20.786 [Thread-3] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+14:54:20.786 [Thread-2] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+14:54:20.791 [Thread-4] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+01:56:36.649 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+01:59:58.526 [Thread-2] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+01:59:58.526 [Thread-1] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+01:59:58.526 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+03:53:10.806 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+03:56:48.740 [Thread-0] INFO  multiThreadServer.ClientHandler - Closed Objects and socket successfully
+03:56:48.741 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination

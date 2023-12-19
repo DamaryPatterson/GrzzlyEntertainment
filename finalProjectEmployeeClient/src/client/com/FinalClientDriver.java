@@ -15,12 +15,13 @@ public class FinalClientDriver {
 			CustomerMessage message = new CustomerMessage("xxxx","11001","This is a new message","");
 			Transaction1 transaction = new Transaction1("t1263","11001","00011","2023-12-12",1000.0);
 			
-			 EventSchedule newEvent = new EventSchedule();
-		        newEvent.setEventScheduleID("12345");
-		        newEvent.setEventID("654xx");
-		        newEvent.setEmployeeID("2000");
-		        newEvent.setEquipmentID("100");
-		        newEvent.setEventDate("2023-2-2"); // Set the event date as needed
+			
+			 EventSchedule newEventSch = new EventSchedule();
+		        newEventSch.setEventScheduleID("12345");
+		        newEventSch.setEventID("654xx");
+		        newEventSch.setEmployeeID("2000");
+		        newEventSch.setEquipmentID("100");
+		        newEventSch.setEventDate("2023-2-2"); // Set the event date as needed
 		        
 		        
 		        
@@ -75,10 +76,10 @@ public class FinalClientDriver {
 
 		        
 		        
-//		        client.sendAction("Add EventSchedule");
-//		        System.out.println("Message sent to server");
-//		        client.sendEventSchedule(newEvent);
-//		        System.out.println("record Sent to server");
+		        client.sendAction("Add EventSchedule");
+		        System.out.println("Message sent to server");
+		        client.sendEventSchedule(newEventSch);
+		        System.out.println("record Sent to server");
 			client.closeConnection();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
