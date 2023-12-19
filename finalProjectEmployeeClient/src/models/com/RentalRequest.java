@@ -22,6 +22,10 @@ public class RentalRequest implements Serializable {
     private double quotationCost;
     private boolean rentalStatus;
     
+    
+    public RentalRequest() {
+    	
+    }
     public RentalRequest(RentalRequest rReq) {
 		super();
 		this.requestID = rReq.requestID;
@@ -39,19 +43,24 @@ public class RentalRequest implements Serializable {
 	 * @param quotationCost
 	 * @param rentalStatus
 	 */
-	public RentalRequest(String requestID, String customerID, String equipmentID, Date rentalDate, double quotationCost,
-			boolean rentalStatus) {
-		super();
-		this.requestID = requestID;
-		this.customerID = customerID;
-		this.equipmentID = equipmentID;
-		this.rentalDate = rentalDate;
-		this.quotationCost = quotationCost;
-		this.rentalStatus = rentalStatus;
-	}
-	public RentalRequest() {
-		// TODO Auto-generated constructor stub
-	}
+    public RentalRequest(String requestID, String customerID, String equipmentID, String rentalDate,
+            double quotationCost, boolean rentalStatus) {
+        super();
+        this.requestID = requestID;
+        this.customerID = customerID;
+        this.equipmentID = equipmentID;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            this.rentalDate = dateFormat.parse(rentalDate);
+        } catch (ParseException e) {
+            // Handle parsing exception (e.g., log, throw, etc.)
+            e.printStackTrace();
+        }
+        this.quotationCost = quotationCost;
+        this.rentalStatus = rentalStatus;
+    }
+
+
 	// Other request attributes, getters, setters, and methods
 	public String getRequestID() {
 		return requestID;

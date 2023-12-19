@@ -14,6 +14,7 @@ public class FinalClientDriver {
 			Customer customer = new Customer("11001","JPatterson","0000",2000.0);
 			CustomerMessage message = new CustomerMessage("xxxx","11001","This is a new message","");
 			Transaction1 transaction = new Transaction1("t1263","11001","00011","2023-12-12",1000.0);
+			RentalRequest rReq =new RentalRequest("00012","2001463","100","2023-12-07",5000.0,true);
 			
 			
 			 EventSchedule newEventSch = new EventSchedule();
@@ -76,11 +77,19 @@ public class FinalClientDriver {
 
 		        
 		        
-		        client.sendAction("Add EventSchedule");
+//		        client.sendAction("Add EventSchedule");
+//		        System.out.println("Message sent to server");
+//		        client.sendEventSchedule(newEventSch);
+//		        System.out.println("record Sent to server");
+		        
+		        client.sendAction("Add RentalRequest");
 		        System.out.println("Message sent to server");
-		        client.sendEventSchedule(newEventSch);
+		        client.sendRentalRequest(rReq);
 		        System.out.println("record Sent to server");
+
 			client.closeConnection();
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -239,7 +239,7 @@ public class ClientHandler implements Runnable {
 					objOs.writeObject(foundRentalRequest);
 					break;
 				case "Read All Request":
-					viewAllRequest();
+					objOs.writeObject(viewAllRequest());
 					break;
 				case "Update RentalRequest":
 					break;
@@ -774,49 +774,68 @@ public class ClientHandler implements Runnable {
 	private void addTransactionToDatabase(Transaction1 transaction) {
 	    String sql = "INSERT INTO rentalent.transaction(transactionID, customerID, requestID, transactionDate, amountPaid) VALUES (?, ?, ?, ?, ?)";
 	    
-	    try {
-	        PreparedStatement pstmt = dbConn.prepareStatement(sql);
-	        
-	        pstmt.setString(1, transaction.getTransactionID());
-	        pstmt.setString(2, transaction.getCustomerID());
-	        pstmt.setString(3, transaction.getRequestID());
-	        
-	        // Convert Date to a format compatible with your database before insertion
-	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	        String formattedDate = dateFormat.format(transaction.getTransactionDate());
-	        pstmt.setString(4, formattedDate);
-	        
-	        pstmt.setDouble(5, transaction.getAmountPaid());
-	        
-	        if (pstmt.executeUpdate() == 1) {
-	            objOs.writeObject(true);
-	        } else {
-	            objOs.writeObject(false);
-	        }
-	    } catch (SQLException | IOException e) {
-	        e.printStackTrace();
-	    }
+	        try {
+				PreparedStatement pstmt = dbConn.prepareStatement(sql);
+				
+				pstmt.setString(1, transaction.getTransactionID());
+				pstmt.setString(2, transaction.getCustomerID());
+				pstmt.setString(3, transaction.getRequestID());
+				
+				// Convert Date to a format compatible with your database before insertion
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String formattedDate = dateFormat.format(transaction.getTransactionDate());
+				pstmt.setString(4, formattedDate);
+				
+				pstmt.setDouble(5, transaction.getAmountPaid());
+				
+				if (pstmt.executeUpdate() == 1) {
+				    objOs.writeObject(true);
+				} else {
+				    objOs.writeObject(false);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 
 	private void addRentalRequestToDatabase(RentalRequest rentalRequest) {
-		String sql = "INSERT INTO rentalent.rentalrequest(requestID, customerID, equipmentID rentalDate, quotationCost, rentalStatus)"
-				+ " VALUES('" + rentalRequest.getRequestID() + "','" +rentalRequest.getCustomerID() + "','" 
-				+ "','" +rentalRequest.getEquipmentID()+rentalRequest.getRentalDate() + "','"
-				
-				+ rentalRequest.getQuotationCost() + "','" + rentalRequest.isRentalStatus() + "');";
-		try {
-			Statement stmt = dbConn.createStatement();
+	    String sql = "INSERT INTO rentalent.rentalrequest(requestID, customerID, equipmentID, rentalDate, quotationCost, rentalStatus) VALUES (?, ?, ?, ?, ?, ?)";
 
-			if ((stmt.executeUpdate(sql) == 1)) {
-				objOs.writeObject(true);
-			} else {
-				objOs.writeObject(false);
-			}
-		} catch (SQLException | IOException e) {
-			e.printStackTrace();
-		}
+	    try {
+	        PreparedStatement pstmt = dbConn.prepareStatement(sql);
+	        pstmt.setString(1, rentalRequest.getRequestID());
+	        pstmt.setString(2, rentalRequest.getCustomerID());
+	        pstmt.setString(3, rentalRequest.getEquipmentID());
+
+	        // Convert and set the date using java.sql.Date
+	        java.util.Date parsedDate = rentalRequest.getRentalDate();
+	        java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
+	        pstmt.setDate(4, sqlDate);
+
+	        pstmt.setDouble(5, rentalRequest.getQuotationCost());
+	        pstmt.setBoolean(6, rentalRequest.isRentalStatus());
+
+	        int rowsAffected = pstmt.executeUpdate();
+
+	        // Handle success or failure
+	        if (rowsAffected == 1) {
+	            objOs.writeObject(true);
+	        } else {
+	            objOs.writeObject(false);
+	        }
+
+	        pstmt.close();
+	    } catch (SQLException | IOException e) {
+	    	logger.error(sql);
+	        e.printStackTrace();
+	    }
 	}
+
 
 	private void addMessageToDatabase(CustomerMessage message) {
 		String sql = "INSERT INTO customermessage(messageID,customerID,messageContent,employeeResponse)" + " VALUES('"
