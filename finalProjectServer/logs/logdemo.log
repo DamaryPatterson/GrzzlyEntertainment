@@ -94,3 +94,30 @@
 03:53:10.806 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
 03:56:48.740 [Thread-0] INFO  multiThreadServer.ClientHandler - Closed Objects and socket successfully
 03:56:48.741 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+04:20:25.384 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+04:20:34.560 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+04:30:17.032 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+04:30:24.110 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+04:39:29.288 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+04:39:37.174 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+04:53:15.487 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+05:01:11.372 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+05:01:18.850 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+05:02:03.629 [Thread-1] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+05:03:48.027 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+05:04:00.042 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+05:08:38.487 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+05:08:53.692 [Thread-0] INFO  multiThreadServer.ClientHandler - Closed Objects and socket successfully
+05:08:53.693 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+05:17:33.660 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+05:17:38.914 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+05:17:41.140 [main] ERROR multiThreadServer.AppServer - Server Failed To Start :
+05:17:50.619 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+05:18:01.125 [Thread-0] INFO  multiThreadServer.ClientHandler - Closed Objects and socket successfully
+05:18:01.127 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+05:26:39.279 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+05:26:50.962 [Thread-0] INFO  multiThreadServer.ClientHandler - Closed Objects and socket successfully
+05:26:50.963 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
+05:28:49.343 [main] INFO  multiThreadServer.AppServer - Server Started SuccessFully
+05:29:01.482 [Thread-0] INFO  multiThreadServer.ClientHandler - Closed Objects and socket successfully
+05:29:01.483 [Thread-0] ERROR multiThreadServer.ClientHandler - There is an error here that Forces termination
